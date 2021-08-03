@@ -8,6 +8,7 @@
 # include <mlx.h>
 # include <stdlib.h>
 # include <math.h>
+# include "libft.h"
 
 /***************************************/
 /*        Viewport Dimensions          */
@@ -26,6 +27,7 @@ typedef	struct	s_data
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
+	char		*color;
 	int		endian;
 }								t_data;
 

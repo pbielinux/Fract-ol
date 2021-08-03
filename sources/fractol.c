@@ -1,10 +1,5 @@
 #include "fractol.h"
 
-int		color_compiler(t_color color)
-{
-
-}
-
 void	fast_pixel_put(t_data *data, int x, int y, int color)
 {
 	// Bytes are not aligned start after the addres pointer, pixels are bytes in lines(y) so...
@@ -21,7 +16,6 @@ int	main()
 	void		*mlx;
 	void		*win;
 	t_data	img;
-	t_color	color;
 
 	// Initialize the connection with Display server;
 	mlx = mlx_init();
@@ -41,7 +35,7 @@ int	main()
 	for (int x = 400; x < 500; x++)
 		for (int y = 400; y < 500; y++)
 		{
-			fast_pixel_put(&img, x, y, 0x00FF00);
+			fast_pixel_put(&img, x, y, ft_strtol("0x00FF00", &img.color, 16));
 		}
 
 	mlx_put_image_to_window(mlx, win, img.img, 0, 0);
@@ -59,5 +53,5 @@ int	main()
 				angle = i;
 				x = r * cos(angle * PI / 180);
 				y = r * sin(angle * PI / 180);
-				fast_pixel_put(&img, 1000 + x, 200 + y, 0x00FF00);
+				fast_pixel_put(&img, 1000 + x, 200 + y, 0x0000FF);
 		} */
