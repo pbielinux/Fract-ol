@@ -76,5 +76,5 @@ fclean: clean
 	@echo "$(NAME): $(RED)$(NAME) was deleted$(RESET)"
 
 re:
-	@make flean
-	@make al
+	@make fclean
+	@make all

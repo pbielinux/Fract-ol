@@ -29,4 +29,13 @@ typedef	struct	s_data
 	int		endian;
 }								t_data;
 
+typedef	struct s_color
+{
+	char		*a;
+	char		*r;
+	char		*g;
+	char		*b;
+}							t_color;
+
+
 #endif // !_FRACTOL_H_
