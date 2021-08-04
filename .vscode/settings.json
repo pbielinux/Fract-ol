@@ -1,0 +1,11 @@
+{
+	"C_Cpp.errorSquiggles": "Disabled",
+	"files.associations": {
+		".sequelizerc": "javascript",
+		".stylelintrc": "json",
+		".prettierrc": "json",
+		"*.tsx": "typescriptreact",
+		"__locale": "c",
+		"fractol.h": "c"
+	}
+}

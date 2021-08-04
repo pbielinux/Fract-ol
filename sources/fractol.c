@@ -1,54 +1,44 @@
 #include "fractol.h"
 
-long	color_compiler(int alpha, int red, int green, int blue)
-{
-	return ((alpha * 256 + red) * 256 + green) * 256 + blue;
-}
-
-void	fast_pixel_put(t_data *data, int x, int y, int color)
+void	fast_pixel_put(t_image *image, int x, int y, uint8_t color)
 {
 	// Bytes are not aligned start after the addres pointer, pixels are bytes in lines(y) so...
 	// offset = address + (y * line_length + x * (bits_per_pixel/8))
-	char	*dest;
+	long long	*dest;
 
-	dest = data->addr + (y * data->line_length + x * (data->bits_per_pixel/8));
-	*(unsigned int *)dest = color;
+	dest = image->addr + (y * image->line_length + x * (image->bits_per_pixel/8));
+	*dest = (long long)color;
 }
 
 int	main()
 {
-	void		*mlx;
-	void		*win;
-	t_data	img;
-	long		color;
+	t_mlx		*mlx;
+	t_image	*image;
+	t_color	*color;
+	uint8_t	color_to_print;
 
-	// Initialize the connection with Display server;
-	mlx = mlx_init();
-	if (!mlx)
-		exit(-1);
+	mlx = mlx_data_init();
+	image = image_data_init(mlx);
+	color = color_data_init();
 
-	// Initialize a new window
-	win = mlx_new_window(mlx, WIDTH, HEIGHT, "Fract-ol");
-
-	// Create a new image
-	img.img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	// Set the address of the image on with the pixels can be mutated
-	img.addr = mlx_get_data_addr(img.img,
-		&img.bits_per_pixel, &img.line_length, &img.endian);
-
-	color = color_compiler(0, 0, 255, 0);
-
+	int a = 0;
+	int r = 200;
+	int g = 100;
+	int b = 50;
 	// Loop to put pixels in image
-	for (int x = 400; x < 500; x++)
-		for (int y = 400; y < 500; y++)
+	for (int x = 0; x <= 512; x++)
+	{
+		for (int y = 0; y <= 512; y++)
 		{
-			fast_pixel_put(&img, x, y, color);
+			color_to_print = color_compiler(color, a, r, g, b);
+			fast_pixel_put(image, x, y, color->value);
 		}
+	}
 
-	mlx_put_image_to_window(mlx, win, img.img, 0, 0);
+/* 	mlx_put_image_to_window(mlx->ptr, mlx->window_ptr, image->addr, 400, 200);
 
 	// Event loop - Mouse/Keyboard
-	mlx_loop(mlx);
+	mlx_loop(mlx->ptr); */
 }
 
 /* 	// Print circle
@@ -60,5 +50,5 @@ int	main()
 				angle = i;
 				x = r * cos(angle * PI / 180);
 				y = r * sin(angle * PI / 180);
-				fast_pixel_put(&img, 1000 + x, 200 + y, 0x0000FFFF);
+				fast_pixel_put(&image, 1000 + x, 200 + y, 0x0000FFFF);
 		} */
