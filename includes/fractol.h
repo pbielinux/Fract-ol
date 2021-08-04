@@ -27,17 +27,9 @@ typedef	struct	s_data
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
-	char		*color;
 	int		endian;
 }								t_data;
 
-typedef	struct s_color
-{
-	char		*a;
-	char		*r;
-	char		*g;
-	char		*b;
-}							t_color;
 
 
 #endif // !_FRACTOL_H_
