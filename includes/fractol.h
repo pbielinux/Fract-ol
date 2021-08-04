@@ -22,23 +22,6 @@
 /*             Structures              */
 /***************************************/
 
-/* MinilibX Data */
-typedef	struct	s_mlx
-{
-	long	*ptr;
-	long	*window_ptr;
-}								t_mlx;
-
-/* Image Data */
-typedef	struct	s_image
-{
-	long long	*img;
-	long long	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}								t_image;
-
 /* Color Data */
 typedef	struct	s_color
 {
@@ -49,14 +32,33 @@ typedef	struct	s_color
 	uint8_t	blue;
 }								t_color;
 
+/* Image Data */
+typedef	struct	s_image
+{
+	void	*image;
+	char	*data_addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}								t_image;
+
+/* MinilibX Data */
+typedef	struct	s_fractol
+{
+	void		*mlx;
+	void		*window;
+	t_image *image;
+	int			max_iteration;
+}								t_fractol;
+
 /***************************************/
 /*              Functions              */
 /***************************************/
 
-t_mlx		*mlx_data_init();
-t_image	*image_data_init(t_mlx *mlx);
-t_color	*color_data_init();
-uint8_t	get_opposite_color(t_color color);
+t_image *image_init(void *mlx);
+t_fractol	*fractol_init(void *mlx);
+t_color 	*color_init(void);
+uint8_t		get_opposite_color(t_color color);
 uint8_t		color_compiler(t_color *color, int ch_A, int ch_R, int ch_G, int ch_B);
 
 #endif // !_FRACTOL_H_

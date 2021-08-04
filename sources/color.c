@@ -14,7 +14,7 @@ uint8_t get_opposite_color(t_color color)
 	return (new_color);
 }
 
-uint8_t	color_compiler(t_color *color, int ch_A, int ch_R, int ch_G, int ch_B)
+uint8_t color_compiler(t_color *color, int ch_A, int ch_R, int ch_G, int ch_B)
 {
 	color->value = 0x00000000;
 

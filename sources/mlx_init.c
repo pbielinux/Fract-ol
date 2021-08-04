@@ -1,41 +1,56 @@
 #include "fractol.h"
 
-t_mlx		*mlx_data_init()
+void	set_defaults(t_fractol *fractol)
 {
-	t_mlx	*mlx;
-
-	mlx = malloc(sizeof(t_mlx));
-	mlx->ptr = mlx_init();
-		if (!mlx || !mlx->ptr)
-			exit (-1);
-
-	mlx->window_ptr = mlx_new_window(mlx->ptr, WIDTH, HEIGHT, "Fractol");
-
-	return(mlx);
+	fractol->max_iteration = 50;
 }
 
-t_image	*image_data_init(t_mlx *mlx)
+t_image *image_init(void *mlx)
 {
 	t_image *image;
 
-	image = NULL;
-	image->img = mlx_new_image(mlx->ptr, WIDTH, HEIGHT);
-	image->addr = (long long*)mlx_get_data_addr(image->img,
-		&image->bits_per_pixel, &image->line_length, &image->endian);
+	image = (t_image *)malloc(sizeof(t_image));
+	if (!image)
+		exit (-1);
+
+	image->image = mlx_new_image(mlx, WIDTH, HEIGHT);
+	if (!image->image)
+		exit (-1);
+
+	image->data_addr = mlx_get_data_addr(
+		image->image,
+		&image->bits_per_pixel,
+		&image->line_length,
+		&image->endian);
 
 	return (image);
 }
 
-t_color	*color_data_init()
+t_fractol	*fractol_init(void *mlx)
 {
-	t_color *color;
+	t_fractol	*fractol;
 
-	color = NULL;
-	color->value = 0x00000000;
-	color->alpha = 0x00;
-	color->red = 0x00;
-	color->green = 0x00;
-	color->blue = 0x00;
+	fractol = (t_fractol *)malloc(sizeof(t_fractol));
+	if (!fractol)
+		exit (-1);
+
+	fractol->mlx = mlx;
+
+	fractol->window = mlx_new_window(mlx, WIDTH, HEIGHT, "Fractol");
+	if (!fractol->window)
+		exit (-1);
+
+	fractol->image = image_init(mlx);
+	set_defaults(fractol);
+
+	return(fractol);
+}
+
+t_color *color_init(void)
+{
+	t_color	*color;
+
+	color = (t_color *)malloc(sizeof(t_color));
 
 	return (color);
 }
