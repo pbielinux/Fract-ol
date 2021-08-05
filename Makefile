@@ -9,14 +9,15 @@ INCLUDES = -I$(HEADERS_DIR) -I$(LIBFT_HEADERS) -I$(MLX_HEADERS)
 
 LIBFT = $(LIBFT_DIR)libft.a
 LIBFT_DIR = ./libft/
-LIBFT_HEADERS = $(LIBFT_DIR)includes/
+LIBFT_HEADERS = $(LIBFT_DIR)include/
 
 MLX = $(MLX_DIR)libmlx.a
 MLX_DIR = ./mlx_macos/
 MLX_HEADERS = $(MLX_DIR)
 
 HEADERS_LIST = \
-	fractol.h
+	fractol.h \
+	macos_keys.h
 HEADERS_DIR = ./includes/
 HEADERS = $(addprefix $(HEADERS_DIR), $(HEADERS_LIST))
 
@@ -25,7 +26,9 @@ SOURCES_LIST = \
 	fractol.c \
 	color.c \
 	mlx_init.c \
-	image.c
+	image.c \
+	utilities.c \
+	keyboard_control.c
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))
 
 OBJECTS_DIR = objects/

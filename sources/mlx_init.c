@@ -20,6 +20,7 @@ t_fractol	*fractol_init(void *mlx)
 		exit (-1);
 
 	fractol->image = image_init(mlx);
+	fractol->color = color_init();
 	set_defaults(fractol);
 
 	return(fractol);

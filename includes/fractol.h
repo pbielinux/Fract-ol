@@ -9,6 +9,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include "libft.h"
+# include "macos_keys.h"
 
 /***************************************/
 /*        Viewport Dimensions          */
@@ -47,6 +48,7 @@ typedef	struct	s_fractol
 	void		*mlx;
 	void		*window;
 	t_image *image;
+	t_color *color;
 	int			max_iteration;
 }								t_fractol;
 
@@ -54,10 +56,14 @@ typedef	struct	s_fractol
 /*              Functions              */
 /***************************************/
 
-t_image *image_init(void *mlx);
+t_image 	*image_init(void *mlx);
 t_fractol	*fractol_init(void *mlx);
 t_color 	*color_init(void);
+void			fast_pixel_put(t_fractol *fractol, int x, int y, t_color *color);
 uint8_t		get_opposite_color(t_color color);
-uint8_t color_compiler(t_color *color, int ch_A, int ch_R, int ch_G, int ch_B);
+uint8_t 	color_compiler(t_color *color, int ch_A, int ch_R, int ch_G, int ch_B);
+void			draw_square(t_fractol *fractol, int x_start, int x_length, int y_start, int y_length, t_color *color);
+int				close_program(void *param);
+int				key_press(int key, t_fractol *fractol);
 
 #endif // !_FRACTOL_H_

@@ -1,5 +1,15 @@
 #include "fractol.h"
 
+void	fast_pixel_put(t_fractol *fractol, int x, int y, t_color *color)
+{
+	// Bytes are not aligned start after the addres pointer, pixels are bytes in lines(y) so...
+	// offset = address + (y * line_length + x * (bits_per_pixel/8))
+	char	*offset;
+
+	offset = fractol->image->image_addr + ((y * fractol->image->line_length) + (x * fractol->image->bits_per_pixel / 8));
+	*(unsigned int *)offset = color->value;
+}
+
 t_image *image_init(void *mlx)
 {
 	t_image *image;
