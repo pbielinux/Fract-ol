@@ -22,6 +22,12 @@
 /*             Structures              */
 /***************************************/
 
+typedef	struct	s_cordinates
+{
+	int
+}								t_point;
+
+
 /* Color Data */
 typedef	struct	s_color
 {
@@ -33,24 +39,42 @@ typedef	struct	s_color
 }								t_color;
 
 /* Image Data */
-typedef	struct	s_image
+typedef	struct	s_buffer
 {
-	void	*image;
-	char	*image_addr;
+	int		initied;
+	void	*igm;
+	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}								t_image;
+	int		width;
+	int		height;
+	int		offset;
+}								t_buff;
 
 /* MinilibX Data */
 typedef	struct	s_fractol
 {
 	void		*mlx;
 	void		*window;
-	t_image *image;
-	t_color *color;
+	t_buff	*image;
+	t_color	*color;
 	int			max_iteration;
-}								t_fractol;
+}								t_fract;
+
+/* Context */
+typedef	struct	s_context
+{
+	int			width;
+	int			height;
+	t_color	*color;
+	int			line_length;
+	void		*mlw_ptr;
+	void 		*win_ptr;
+	t_buff	*buff;
+	t_buff	*cur_buff;
+}								t_ctx;
+
 
 /***************************************/
 /*              Functions              */
