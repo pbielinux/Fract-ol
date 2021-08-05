@@ -17,7 +17,6 @@
 # define WIDTH 1920
 # define HEIGHT 1080
 
-
 /***************************************/
 /*             Structures              */
 /***************************************/
@@ -25,18 +24,18 @@
 /* Color Data */
 typedef	struct	s_color
 {
-	uint8_t	value;
-	uint8_t	alpha;
-	uint8_t	red;
-	uint8_t	green;
-	uint8_t	blue;
+	int	value;
+	int	alpha;
+	int	red;
+	int	green;
+	int	blue;
 }								t_color;
 
 /* Image Data */
 typedef	struct	s_image
 {
 	void	*image;
-	char	*data_addr;
+	char	*image_addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
@@ -59,6 +58,6 @@ t_image *image_init(void *mlx);
 t_fractol	*fractol_init(void *mlx);
 t_color 	*color_init(void);
 uint8_t		get_opposite_color(t_color color);
-uint8_t		color_compiler(t_color *color, int ch_A, int ch_R, int ch_G, int ch_B);
+uint8_t color_compiler(t_color *color, int ch_A, int ch_R, int ch_G, int ch_B);
 
 #endif // !_FRACTOL_H_

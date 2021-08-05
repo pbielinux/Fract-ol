@@ -1,5 +1,20 @@
 #include "fractol.h"
 
+t_color *color_init(void)
+{
+	t_color	*color;
+
+	color = (t_color *)malloc(sizeof(t_color));
+
+	color->value = 0xFFFFFFFF;
+	color->alpha = 0xFF;
+	color->red = 0xFF;
+	color->green = 0xFF;
+	color->blue = 0xFF;
+
+	return (color);
+}
+
 uint8_t get_opposite_color(t_color color)
 {
 	uint8_t new_color;
@@ -16,18 +31,15 @@ uint8_t get_opposite_color(t_color color)
 
 uint8_t color_compiler(t_color *color, int ch_A, int ch_R, int ch_G, int ch_B)
 {
-	color->value = 0x00000000;
-
+	int new_color;
 	// set the color
-	color->value |= ch_A << 24;
-	color->value |= ch_R << 16;
-	color->value |= ch_G << 8;
-	color->value |= ch_B;
+	new_color = (ch_A << 24 | ch_R << 16 | ch_G << 8 | ch_B);
 	// get the channels data
-	color->alpha	= color->value & (0xFF << 24);
-	color->red		= color->value & (0xFF << 16);
-	color->green	= color->value & (0xFF << 8);
-	color->blue		= color->value & (0xFF);
+	color->value	= new_color;
+	color->alpha	= ch_A;
+	color->red		= ch_R;
+	color->green	= ch_G;
+	color->blue		= ch_B;
 
-	return (color->value);
+	return (new_color);
 }

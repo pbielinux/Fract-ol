@@ -24,7 +24,8 @@ SOURCES_DIR = ./sources/
 SOURCES_LIST = \
 	fractol.c \
 	color.c \
-	mlx_init.c
+	mlx_init.c \
+	image.c
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))
 
 OBJECTS_DIR = objects/
