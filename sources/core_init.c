@@ -48,6 +48,7 @@ void	init_buff(t_ctx *ctx, t_buff **buff, int width, int height)
 	(*buff)->addr = mlx_get_data_addr((*buff)->img, &(*buff)->bits_per_pixel,
 									&(*buff)->line_length,
 									&(*buff)->endian);
+	(*buff)->max_addr = (*buff)->line_length * (*buff)->height;
 	(*buff)->offset = (*buff)->bits_per_pixel / 8;
 	if ((*buff)->addr == NULL)
 		exit_program(NULL, 5, "Buff address not set");
@@ -68,8 +69,18 @@ t_core	*new_core(int width, int height, char *title)
 	return (new);
 }
 
+int		loop_hook(t_core *core)
+{
+	mlx_clear_window(core->ctx->mlx_ptr, core->ctx->win_ptr);
+	mlx_put_image_to_window(core->ctx->mlx_ptr, core->ctx->win_ptr, core->ctx->buff->img, 0, 0);
+
+	return (core->inited);
+}
+
 void	init_loop(t_core *core)
 {
+	ft_putstr("Loop Init OK\n");
+	mlx_loop_hook(core->ctx->mlx_ptr, &loop_hook, core);
 	mlx_hook(core->ctx->win_ptr, 2, (1L << 0), &key_press, core);
 	mlx_hook(core->ctx->win_ptr, 17, (1L << 16), &close_program, core);
 
