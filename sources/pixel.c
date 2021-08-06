@@ -1,10 +1,9 @@
 #include "fractol.h"
 
-void	pixel_put(int x, int y, int color, t_buff *buff)
+void	pixel_put(int x, int y, t_core *core)
 {
-	char	*dst;
-	int		addr_index;
+	char	*offset;
 
-	addr_index = (y * buff->line_length + x * buff->offset);
-	*(unsigned int*)(buff->addr + addr_index) = color;
+	offset = core->ctx->buff->addr + ((y * core->ctx->buff->line_length) + (x * core->ctx->buff->bits_per_pixel / 8));
+	*(unsigned int *)offset = core->ctx->color->value;
 }

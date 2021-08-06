@@ -1,14 +1,35 @@
 #ifndef _FRACTOL_H_
 # define _FRACTOL_H_
 
+# define RST "\033[0m"
+
+# define RED    "\033[0;31m"
+# define GRN    "\033[0;32m"
+# define YELO   "\033[0;33m"
+# define BLUE   "\033[0;34m"
+# define PINK   "\033[0;35m"
+# define CYAN   "\033[0;36m"
+# define GREY   "\033[0;90m"
+# define PURP   "\033[0;94m"
+
+# define BRED	"\033[1;31m"
+# define BGRN	"\033[1;32m"
+# define BYELO	"\033[1;33m"
+# define BBLUE  "\033[1;34m"
+# define BPINK  "\033[1;35m"
+# define BCYAN  "\033[1;36m"
+# define BGREY  "\033[1;90m"
+# define BPURP  "\033[1;94m"
+
 /***************************************/
 /*              Includes               */
 /***************************************/
 
-# include <mlx.h>
-# include <stdlib.h>
-# include <math.h>
 # include <stdbool.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <mlx.h>
+# include <math.h>
 # include "libft.h"
 # include "macos_keys.h"
 
@@ -93,10 +114,12 @@ void		init_buff(t_ctx *ctx, t_buff **buff, int width, int height);
 void		init_loop(t_core *core);
 /* Utilities */
 int			close_program(void *param);
+void	exit_program(t_core *core, int error_code, char *msg);
 void		draw_rect(t_core *core, int x_start, int x_length, int y_start, int y_length);
 /* Pixel */
-void		pixel_put(int x, int y, int color, t_buff *buff);
+void		pixel_put(int x, int y, t_core *core);
 /* Keyboard Ctrl */
 int			key_press(int key, t_core *core);
+
 
 #endif // !_FRACTOL_H_

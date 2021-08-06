@@ -27,12 +27,16 @@
 # define KB_9	25
 # define KB_0	29
 
-// Navigation Keys + WASD
+/* Characters */
 # define KB_W			13
 # define KB_S			1
-# define KB_A			0
 # define KB_D			2
+# define KB_A			0
+# define KB_R			15
+# define KB_G			5
+# define KB_B			11
 
+// Navigation Keys
 # define KB_UP 		126
 # define KB_DOWN	125
 # define KB_LEFT	123

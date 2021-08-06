@@ -25,6 +25,7 @@ t_ctx		*new_context(int width, int height)
 		exit (-1);
 
 	ctx->mlx_ptr = mlx_init();
+
 	ctx->win_ptr = 0;
 	ctx->width = width;
 	ctx->height = height;
@@ -36,9 +37,11 @@ t_ctx		*new_context(int width, int height)
 void	init_buff(t_ctx *ctx, t_buff **buff, int width, int height)
 {
 	(*buff) = malloc(sizeof(t_buff));
-	// ! add protection;
+	if ((*buff) == NULL)
+		exit_program(NULL, 5, "Failed to malloc buff");
 	(*buff)->width = width;
 	(*buff)->height = height;
+		ft_putstr(CYAN"INIT BUFF 1920 x 1080 px"RST);
 	(*buff)->img = NULL;
 	(*buff)->addr = NULL;
 	(*buff)->img = mlx_new_image(ctx->mlx_ptr, width, height);
@@ -46,7 +49,10 @@ void	init_buff(t_ctx *ctx, t_buff **buff, int width, int height)
 									&(*buff)->line_length,
 									&(*buff)->endian);
 	(*buff)->offset = (*buff)->bits_per_pixel / 8;
-	// ! add protections: Buff address not set; Buff image not set
+	if ((*buff)->addr == NULL)
+		exit_program(NULL, 5, "Buff address not set");
+	if ((*buff)->img == NULL)
+		exit_program(NULL, 5, "Buff image not set");
 }
 
 t_core	*new_core(int width, int height, char *title)
