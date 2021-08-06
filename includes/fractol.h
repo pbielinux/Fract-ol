@@ -8,6 +8,7 @@
 # include <mlx.h>
 # include <stdlib.h>
 # include <math.h>
+# include <stdbool.h>
 # include "libft.h"
 # include "macos_keys.h"
 
@@ -24,25 +25,31 @@
 
 typedef	struct	s_cordinates
 {
-	int
+	int	x;
+	int y;
 }								t_point;
 
 
 /* Color Data */
+typedef	struct	s_argb
+{
+	int	a;
+	int	r;
+	int	g;
+	int	b;
+}								t_argb;
+
 typedef	struct	s_color
 {
-	int	value;
-	int	alpha;
-	int	red;
-	int	green;
-	int	blue;
+	int			value;
+	t_argb	channel;
 }								t_color;
 
 /* Image Data */
 typedef	struct	s_buffer
 {
 	int		initied;
-	void	*igm;
+	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
@@ -52,42 +59,44 @@ typedef	struct	s_buffer
 	int		offset;
 }								t_buff;
 
-/* MinilibX Data */
-typedef	struct	s_fractol
-{
-	void		*mlx;
-	void		*window;
-	t_buff	*image;
-	t_color	*color;
-	int			max_iteration;
-}								t_fract;
-
 /* Context */
 typedef	struct	s_context
 {
 	int			width;
 	int			height;
-	t_color	*color;
 	int			line_length;
-	void		*mlw_ptr;
+	void		*mlx_ptr;
 	void 		*win_ptr;
+	t_color	*color;
 	t_buff	*buff;
 	t_buff	*cur_buff;
+	void		(*rect)(t_point, struct s_ctx *);
 }								t_ctx;
+
+/* Core */
+typedef struct	s_core
+{
+	int			inited;
+	t_ctx		*ctx;
+}								t_core;
 
 
 /***************************************/
 /*              Functions              */
 /***************************************/
 
-t_image 	*image_init(void *mlx);
-t_fractol	*fractol_init(void *mlx);
-t_color 	*color_init(void);
-void			fast_pixel_put(t_fractol *fractol, int x, int y, t_color *color);
-uint8_t		get_opposite_color(t_color color);
-uint8_t 	color_compiler(t_color *color, int ch_A, int ch_R, int ch_G, int ch_B);
-void			draw_square(t_fractol *fractol, int x_start, int x_length, int y_start, int y_length, t_color *color);
-int				close_program(void *param);
-int				key_press(int key, t_fractol *fractol);
+/* Core Init */
+t_core	*new_core(int width, int height, char *title);
+t_ctx		*new_context(int width, int height);
+t_color	*new_color(int ch_A, int ch_R, int ch_G, int ch_B);
+void		init_buff(t_ctx *ctx, t_buff **buff, int width, int height);
+void		init_loop(t_core *core);
+/* Utilities */
+int			close_program(void *param);
+void		draw_rect(t_core *core, int x_start, int x_length, int y_start, int y_length);
+/* Pixel */
+void		pixel_put(int x, int y, int color, t_buff *buff);
+/* Keyboard Ctrl */
+int			key_press(int key, t_core *core);
 
 #endif // !_FRACTOL_H_

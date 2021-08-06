@@ -1,7 +1,7 @@
 NAME = fractol
 
 CC = gcc
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Wextra
 LIBRARIES = -lmlx -lm -lft\
 	-L$(LIBFT_DIR) -L$(MLX_DIR)\
 	-framework OpenGL -framework AppKit
@@ -24,9 +24,8 @@ HEADERS = $(addprefix $(HEADERS_DIR), $(HEADERS_LIST))
 SOURCES_DIR = ./sources/
 SOURCES_LIST = \
 	fractol.c \
-	color.c \
-	mlx_init.c \
-	image.c \
+	core_init.c \
+	pixel.c \
 	utilities.c \
 	keyboard_control.c
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))

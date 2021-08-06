@@ -1,8 +1,7 @@
 #include "fractol.h"
 
-int	key_press(int key, t_fractol *fractol)
+int	key_press(int key, t_core *core)
 {
-	(void)fractol;
 	static int x = 560;
 	static int y = 440;
 	static int x_length = 100;
@@ -12,18 +11,18 @@ int	key_press(int key, t_fractol *fractol)
 		exit(0);
 
 	if (key == KB_UP)
-		draw_square(fractol, x, x_length, y -= 15, y_length, fractol->color);
+		draw_rect(core, x, x_length, y -= 15, y_length);
 	if (key == KB_DOWN)
-		draw_square(fractol, x, x_length, y += 15, y_length, fractol->color);
+		draw_rect(core, x, x_length, y += 15, y_length);
 	if (key == KB_LEFT)
-		draw_square(fractol, x -= 15, x_length, y, y_length, fractol->color);
+		draw_rect(core, x -= 15, x_length, y, y_length);
 	if (key == KB_RIGHT)
-		draw_square(fractol, x += 15, x_length, y, y_length, fractol->color);
+		draw_rect(core, x += 15, x_length, y, y_length);
 
 	if (key == KB_PLUS)
-		draw_square(fractol, x -= 5, x_length += 5, y -= 5, y_length += 5, fractol->color);
+		draw_rect(core, x -= 5, x_length += 5, y -= 5, y_length += 5);
 	if (key == KB_MINUS)
-		draw_square(fractol, x += 5, x_length -= 5, y += 5, y_length -= 5, fractol->color);
+		draw_rect(core, x += 5, x_length -= 5, y += 5, y_length -= 5);
 
 	return (0);
 }

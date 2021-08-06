@@ -6,25 +6,24 @@ int	close_program(void *param)
 	exit(0);
 }
 
-void	draw_square(t_fractol *fractol, int x_start, int x_length, int y_start, int y_length, t_color *color)
+void	draw_rect(t_core *core, int x_start, int x_length, int y_start, int y_length)
 {
 	int x;
 	int y;
 
-	ft_bzero(fractol->image->image_addr,
-		WIDTH * HEIGHT * (fractol->image->bits_per_pixel / 8));
+	ft_bzero(core->ctx->buff->addr,
+		WIDTH * HEIGHT * (core->ctx->buff->bits_per_pixel / 8));
 
-	color_compiler(color, 0, 0, 255, 80);
 	y = 0;
 	while (y <= y_length)
 	{
 		x = 0;
 		while (x <= x_length)
 		{
-			fast_pixel_put(fractol, x_start + x, y_start + y, color);
+			pixel_put(core->ctx->buff, x_start + x, y_start + y, core->ctx->color);
 			x++;
 		}
 		y++;
 	}
-	mlx_put_image_to_window(fractol->mlx, fractol->window, fractol->image->image, 0, 0);
+	mlx_put_image_to_window(core->ctx->mlx_ptr, core->ctx->win_ptr, core->ctx->buff->img, 0, 0);
 }
