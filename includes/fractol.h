@@ -26,8 +26,10 @@
 /***************************************/
 
 # include <stdbool.h>
+# include <stdarg.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <time.h>
 # include <mlx.h>
 # include <math.h>
 # include "libft.h"
@@ -113,14 +115,15 @@ t_ctx		*new_context(int width, int height);
 t_color	*new_color(int ch_A, int ch_R, int ch_G, int ch_B);
 void		init_buff(t_ctx *ctx, t_buff **buff, int width, int height);
 void		init_loop(t_core *core);
-int		loop_hook(t_core *core);
+int			loop_hook(t_core *core);
 /* Utilities */
+void		fps_count(t_core *core);
 int			close_program(void *param);
-void	exit_program(t_core *core, int error_code, char *msg);
+void		exit_program(t_core *core, int error_code, char *msg);
 void		draw_rect(t_core *core, int x_start, int x_length, int y_start, int y_length);
 /* Pixel */
 void		pixel_put(int x, int y, t_core *core);
-void		text_put(char *str, int x, int y, t_ctx *ctx);
+void	text_put(t_ctx *ctx, char *str, int x, int y, int color);
 /* Keyboard Ctrl */
 int			key_press(int key, t_core *core);
 

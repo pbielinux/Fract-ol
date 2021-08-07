@@ -25,7 +25,11 @@ t_ctx		*new_context(int width, int height)
 		exit (-1);
 
 	ctx->mlx_ptr = mlx_init();
-
+	if (ctx->mlx_ptr == NULL)
+	{
+		fprintf(stderr, "Cannot stablish a connection with Display Server\n");
+		exit(1);
+	}
 	ctx->win_ptr = 0;
 	ctx->width = width;
 	ctx->height = height;
@@ -41,7 +45,7 @@ void	init_buff(t_ctx *ctx, t_buff **buff, int width, int height)
 		exit_program(NULL, 5, "Failed to malloc buff");
 	(*buff)->width = width;
 	(*buff)->height = height;
-		ft_putstr(CYAN"INIT BUFF 1920 x 1080 px"RST);
+		ft_putstr(CYAN"INIT BUFF 1920 x 1080 px\n"RST);
 	(*buff)->img = NULL;
 	(*buff)->addr = NULL;
 	(*buff)->img = mlx_new_image(ctx->mlx_ptr, width, height);
@@ -62,6 +66,12 @@ t_core	*new_core(int width, int height, char *title)
 
 	new = (t_core *)malloc(sizeof(t_core));
 	new->ctx = new_context(width, height);
+/*	Create a new window.
+** @param	void *mlx_ptr	the mlx instance pointer;
+** @param	int  size_x		the width of the window;
+** @param	int  size_y		the height of the window;
+** @param	char *title		the title of the window;
+** @return	void*			the window instance pointer.*/
 	new->ctx->win_ptr = mlx_new_window(new->ctx->mlx_ptr, width, height, title);
 	new->ctx->color = new_color(0xFF, 0xFF, 0xFF, 0xFF);
 	init_buff(new->ctx, &new->ctx->buff, width, height);
@@ -71,8 +81,23 @@ t_core	*new_core(int width, int height, char *title)
 
 int		loop_hook(t_core *core)
 {
+	char	color_value[200];
+	char	color_channels[200];
+
+	sprintf(color_value,"Color Value: 0x%X", core->ctx->color->value);
+	sprintf(color_channels,"Ch_A: 0x%X,	Ch_R: 0x%X,	Ch_G: 0x%X,	Ch_B: 0x%X",
+				core->ctx->color->channel.a,
+				core->ctx->color->channel.r,
+				core->ctx->color->channel.g,
+				core->ctx->color->channel.b);
+
 	mlx_clear_window(core->ctx->mlx_ptr, core->ctx->win_ptr);
+	draw_rect(core, 1800, 50, 80, 50);
 	mlx_put_image_to_window(core->ctx->mlx_ptr, core->ctx->win_ptr, core->ctx->buff->img, 0, 0);
+
+	fps_count(core);
+	text_put(core->ctx, color_value, 20, 10, 0xFFFFFFFF);
+	text_put(core->ctx, color_channels, 20, 40, 0xFFFFFFFF);
 
 	return (core->inited);
 }
