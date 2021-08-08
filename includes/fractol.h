@@ -28,6 +28,7 @@
 # include <stdbool.h>
 # include <stdarg.h>
 # include <stdlib.h>
+# include <strings.h>
 # include <stdio.h>
 # include <time.h>
 # include <mlx.h>

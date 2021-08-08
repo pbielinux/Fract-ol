@@ -43,6 +43,7 @@ void	init_buff(t_ctx *ctx, t_buff **buff, int width, int height)
 	(*buff) = malloc(sizeof(t_buff));
 	if ((*buff) == NULL)
 		exit_program(NULL, 5, "Failed to malloc buff");
+	ft_bzero((*buff), sizeof(t_buff));
 	(*buff)->width = width;
 	(*buff)->height = height;
 		ft_putstr(CYAN"INIT BUFF 1920 x 1080 px\n"RST);
@@ -91,9 +92,8 @@ int		loop_hook(t_core *core)
 				core->ctx->color->channel.g,
 				core->ctx->color->channel.b);
 
-	mlx_clear_window(core->ctx->mlx_ptr, core->ctx->win_ptr);
+
 	draw_rect(core, 1800, 50, 80, 50);
-	mlx_put_image_to_window(core->ctx->mlx_ptr, core->ctx->win_ptr, core->ctx->buff->img, 0, 0);
 
 	fps_count(core);
 	text_put(core->ctx, color_value, 20, 10, 0xFFFFFFFF);
@@ -105,9 +105,9 @@ int		loop_hook(t_core *core)
 void	init_loop(t_core *core)
 {
 	ft_putstr("Loop Init OK\n");
-	mlx_loop_hook(core->ctx->mlx_ptr, &loop_hook, core);
 	mlx_hook(core->ctx->win_ptr, 2, (1L << 0), &key_press, core);
 	mlx_hook(core->ctx->win_ptr, 17, (1L << 16), &close_program, core);
+	mlx_loop_hook(core->ctx->mlx_ptr, &loop_hook, core);
 
 	mlx_loop(core->ctx->mlx_ptr);
 }
