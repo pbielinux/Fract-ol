@@ -10,6 +10,7 @@ int	key_press(int key, t_core *core)
 	static int r = 0x00;
 	static int g = 0x00;
 	static int b = 0x00;
+	static int maxIterations = 20;
 
 	if (key == KB_ESC)
 		exit(0);
@@ -44,6 +45,18 @@ int	key_press(int key, t_core *core)
 	{
 		bzero(core->ctx->buff->addr, WIDTH * HEIGHT * (core->ctx->buff->bits_per_pixel / 8));
 		draw_rect(core, x += 5, x_length -= 5, y += 5, y_length -= 5);
+	}
+
+
+	if (key == KB_W)
+	{
+		bzero(core->ctx->buff->addr, WIDTH * HEIGHT * (core->ctx->buff->bits_per_pixel / 8));
+		draw_fract(core, maxIterations++);
+	}
+	if (key == KB_S)
+	{
+		bzero(core->ctx->buff->addr, WIDTH * HEIGHT * (core->ctx->buff->bits_per_pixel / 8));
+		draw_fract(core, maxIterations--);
 	}
 
 	if (key == KB_A)

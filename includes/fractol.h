@@ -40,7 +40,7 @@
 /*        Viewport Dimensions          */
 /***************************************/
 
-# define WIDTH 1920
+# define WIDTH 1080
 # define HEIGHT 1080
 
 /***************************************/
@@ -127,6 +127,8 @@ void		pixel_put(int x, int y, t_core *core);
 void	text_put(t_ctx *ctx, char *str, int x, int y, int color);
 /* Keyboard Ctrl */
 int			key_press(int key, t_core *core);
+/* DrawFract */
 
+void	draw_fract(t_core *core, int maxIterations);
 
 #endif // !_FRACTOL_H_
