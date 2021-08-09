@@ -1,5 +1,15 @@
 #include "fractol.h"
 
+void	init_viewport(t_view *viewport)
+{
+	/* Init to mandelbrot set */
+	viewport->x_min = -2.0f;
+	viewport->x_max = 1.0f;
+	viewport->y_min = -1.0f;
+	viewport->y_max = 1.0f;
+	viewport->off_x = -0.5f;
+}
+
 t_color	*new_color(int ch_A, int ch_R, int ch_G, int ch_B)
 {
 	t_color *new;
@@ -61,21 +71,22 @@ void	init_buff(t_ctx *ctx, t_buff **buff, int width, int height)
 		exit_program(NULL, 5, "Buff image not set");
 }
 
-t_core	*new_core(int width, int height, char *title)
+t_core	*new_core(char *title)
 {
 	t_core	*new;
 
 	new = (t_core *)malloc(sizeof(t_core));
-	new->ctx = new_context(width, height);
+	new->ctx = new_context(WIDTH, HEIGHT);
 /*	Create a new window.
 ** @param	void *mlx_ptr	the mlx instance pointer;
 ** @param	int  size_x		the width of the window;
 ** @param	int  size_y		the height of the window;
 ** @param	char *title		the title of the window;
 ** @return	void*			the window instance pointer.*/
-	new->ctx->win_ptr = mlx_new_window(new->ctx->mlx_ptr, width, height, title);
+	new->ctx->win_ptr = mlx_new_window(new->ctx->mlx_ptr, WIDTH, HEIGHT, title);
 	new->ctx->color = new_color(0xFF, 0xFF, 0xFF, 0xFF);
-	init_buff(new->ctx, &new->ctx->buff, width, height);
+	init_buff(new->ctx, &new->ctx->buff, WIDTH, HEIGHT);
+	init_viewport(&new->viewport);
 	new->inited = true;
 	return (new);
 }
@@ -93,7 +104,7 @@ int		loop_hook(t_core *core)
 				core->ctx->color->channel.b);
 
 
-	draw_rect(core, 1800, 50, 80, 50);
+	mlx_put_image_to_window(core->ctx->mlx_ptr, core->ctx->win_ptr, core->ctx->buff->img, 0, 0);
 
 	fps_count(core);
 	text_put(core->ctx, color_value, 20, 10, 0xFFFFFFFF);
@@ -105,6 +116,7 @@ int		loop_hook(t_core *core)
 void	init_loop(t_core *core)
 {
 	ft_putstr("Loop Init OK\n");
+
 	mlx_hook(core->ctx->win_ptr, 2, (1L << 0), &key_press, core);
 	mlx_hook(core->ctx->win_ptr, 17, (1L << 16), &close_program, core);
 	mlx_loop_hook(core->ctx->mlx_ptr, &loop_hook, core);

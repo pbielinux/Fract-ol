@@ -40,8 +40,8 @@
 /*        Viewport Dimensions          */
 /***************************************/
 
-# define WIDTH 1080
-# define HEIGHT 1080
+# define WIDTH 1000
+# define HEIGHT 1000
 
 /***************************************/
 /*             Structures              */
@@ -55,9 +55,10 @@ typedef	struct	s_cordinates
 
 typedef	struct	s_complex
 {
-	double	real;
-	double	imaginary;
+	double	r;
+	double	i;
 }								t_complex;
+
 
 /* Color Data */
 typedef	struct	s_argb
@@ -89,17 +90,29 @@ typedef	struct	s_buffer
 	int		max_addr;
 }								t_buff;
 
+typedef	struct	s_viewport
+{
+	double	x_min;
+	double	x_max;
+	double	y_min;
+	double	y_max;
+	double	zoom;
+	double	off_x;
+	double	off_y;
+	long		max;
+}								t_view;
+
 /* Context */
 typedef	struct	s_context
 {
+	void		*mlx_ptr;
+	void 		*win_ptr;
+	t_buff	*buff;
+	t_buff	*cur_buff;
+	t_color	*color;
 	int			width;
 	int			height;
 	int			line_length;
-	void		*mlx_ptr;
-	void 		*win_ptr;
-	t_color	*color;
-	t_buff	*buff;
-	t_buff	*cur_buff;
 	void		(*rect)(t_point, struct s_ctx *);
 }								t_ctx;
 
@@ -108,6 +121,7 @@ typedef struct	s_core
 {
 	int			inited;
 	t_ctx		*ctx;
+	t_view	viewport;
 }								t_core;
 
 
@@ -116,12 +130,15 @@ typedef struct	s_core
 /***************************************/
 
 /* Core Init */
-t_core	*new_core(int width, int height, char *title);
+t_core	*new_core(char *title);
 t_ctx		*new_context(int width, int height);
 t_color	*new_color(int ch_A, int ch_R, int ch_G, int ch_B);
 void		init_buff(t_ctx *ctx, t_buff **buff, int width, int height);
 void		init_loop(t_core *core);
 int			loop_hook(t_core *core);
+/* View Port */
+void		reset_viewport(t_core *core);
+void		viewport_fit(t_view *viewport);
 /* Utilities */
 void		fps_count(t_core *core);
 int			close_program(void *param);
@@ -131,9 +148,10 @@ void		draw_rect(t_core *core, int x_start, int x_length, int y_start, int y_leng
 void		pixel_put(int x, int y, t_core *core);
 void	text_put(t_ctx *ctx, char *str, int x, int y, int color);
 /* Keyboard Ctrl */
+void		zoom(int x, int y, t_view *viewport, double zoom);
 int			key_press(int key, t_core *core);
 /* DrawFract */
-
-void	draw_fract(t_core *core, int maxIterations, double zoom);
+void	draw_fract(t_core *core);
+t_complex	screen_to_complex(int x, int y, t_view *viewport);
 
 #endif // !_FRACTOL_H_
