@@ -5,12 +5,12 @@ double	ft_map(double nb, double	in_min, double in_max, double out_min, double ou
 	return (out_min + ((out_max - out_min) / (in_max - in_min)) * (nb - in_min));
 }
 
-void	draw_fract(t_core *core, int maxIterations)
+void	draw_fract(t_core *core, int maxIterations, double zoom)
 {
 	int 		bright;
 	int			i;
-	double	a, ca;
-	double	b, cb;
+	long double	a, ca;
+	long double	b, cb;
 	double	realComponent;
 	double	complexComponent;
 
@@ -19,8 +19,8 @@ void	draw_fract(t_core *core, int maxIterations)
 	{
 		for (int y = 0; y < core->ctx->height; y++)
 		{
-			a = ft_map(x, 0, (double)core->ctx->width, -2.5, 2.5);
-			b = ft_map(y, 0, (double)core->ctx->height, -2.5, 2.5);
+			a = ft_map(x, 0, (double)core->ctx->width, -zoom, zoom);
+			b = ft_map(y, 0, (double)core->ctx->height, -zoom, zoom);
 
 			ca = a;
 			cb = b;
@@ -34,7 +34,7 @@ void	draw_fract(t_core *core, int maxIterations)
 				a = realComponent + ca;
 				b = complexComponent + cb;
 
-				if (abs(realComponent + complexComponent) > 16)
+				if (abs(realComponent + complexComponent) > 9)
 					break;
 				i++;
 			}
@@ -43,7 +43,7 @@ void	draw_fract(t_core *core, int maxIterations)
 
 			if (i == maxIterations)
 				bright = 0;
-			core->ctx->color = new_color(0, 255, bright, 0);
+			core->ctx->color = new_color(bright, 0, bright, 0);
 			pixel_put(x, y, core);
 		}
 	}

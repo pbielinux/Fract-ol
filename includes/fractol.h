@@ -53,6 +53,11 @@ typedef	struct	s_cordinates
 	int y;
 }								t_point;
 
+typedef	struct	s_complex
+{
+	double	real;
+	double	imaginary;
+}								t_complex;
 
 /* Color Data */
 typedef	struct	s_argb
@@ -129,6 +134,6 @@ void	text_put(t_ctx *ctx, char *str, int x, int y, int color);
 int			key_press(int key, t_core *core);
 /* DrawFract */
 
-void	draw_fract(t_core *core, int maxIterations);
+void	draw_fract(t_core *core, int maxIterations, double zoom);
 
 #endif // !_FRACTOL_H_
