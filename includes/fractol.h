@@ -40,8 +40,8 @@
 /*        Viewport Dimensions          */
 /***************************************/
 
-# define WIDTH 1000
-# define HEIGHT 1000
+# define WIDTH 1920
+# define HEIGHT 1080
 
 /***************************************/
 /*             Structures              */
@@ -113,7 +113,7 @@ typedef	struct	s_context
 	int			width;
 	int			height;
 	int			line_length;
-	void		(*rect)(t_point, struct s_ctx *);
+//	void		(*rect)(t_point, struct s_ctx *);
 }								t_ctx;
 
 /* Core */
@@ -152,6 +152,7 @@ void		zoom(int x, int y, t_view *viewport, double zoom);
 int			key_press(int key, t_core *core);
 /* DrawFract */
 void	draw_fract(t_core *core);
+void	draw_fract_2(t_core *core);
 t_complex	screen_to_complex(int x, int y, t_view *viewport);
 
 #endif // !_FRACTOL_H_

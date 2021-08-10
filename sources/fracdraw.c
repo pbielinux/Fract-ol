@@ -35,8 +35,8 @@ void	draw_fract(t_core *core)
 			i = 0;
 			while (z.r * z.r + z.i * z.i < (1 << 8) && i < core->viewport.max)
 			{
-				temp.r = z.r * z.r - z.i * z.i - c.r;
-				temp.i = z.r * z.i * 2 - c.i;
+				temp.r = z.r * z.r - z.i * z.i + c.r;
+				temp.i = z.r * z.i * 2 + c.i;
 
 				if (z.r == temp.r && z.i == temp.i)
 				{
@@ -48,11 +48,74 @@ void	draw_fract(t_core *core)
 				i++;
 			}
 
-			bright = (int)ft_map(i, 0, core->viewport.max, 0, 255);
 			if (i == core->viewport.max)
-				bright = 0;
-			core->ctx->color = new_color(bright, 0, bright, 0);
+				core->ctx->color = new_color(0, 0, 0, 0);
+			else
+				core->ctx->color = new_color(i, 0, i, i * 20);
+
 			pixel_put(x, y, core);
 		}
 	}
 }
+
+/* void	mandelbrot(t_core *core, int x, int y)
+{
+	t_complex	z;
+	t_complex	c;
+	t_complex	temp;
+	int				i;
+	int				color;
+
+	color = core->ctx->color->value;
+
+	z = screen_to_complex(x, y, &core->viewport);
+	c = z;
+	i = 0;
+	while (z.r * z.r + z.i * z.i < (1 << 8) && i++ < core->viewport.max)
+	{
+		temp.r = z.r * z.r - z.i * z.i + c.r;
+		temp.i = z.r * z.i * 2 + c.i;
+		z = temp;
+	}
+	if (i == core->viewport.max)
+		color = 0;
+	else
+		color *= i;
+	pixel_put(x, y, core);
+}
+
+void	draw_fract_2(t_core *core)
+{
+	int				x;
+	int				y;
+	t_complex	z;
+	t_complex	c;
+	t_complex	temp;
+	int				i;
+	int				color;
+
+	color = core->ctx->color->value;
+	x = 0;
+	y = 0;
+	while (y++ < core->ctx->height)
+	{
+		while (x++ < core->ctx->width)
+		{
+				z = screen_to_complex(x, y, &core->viewport);
+				c = z;
+				i = 0;
+				while (z.r * z.r + z.i * z.i < (1 << 8) && i++ < core->viewport.max)
+				{
+					temp.r = z.r * z.r - z.i * z.i + c.r;
+					temp.i = z.r * z.i * 2 + c.i;
+					z = temp;
+				}
+				if (i == core->viewport.max)
+					color = 0;
+				else
+					color *= i;
+				pixel_put(x, y, core, color);
+		}
+	}
+
+} */

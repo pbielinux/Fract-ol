@@ -90,7 +90,7 @@ void	draw_rect(t_core *core, int x_start, int x_length, int y_start, int y_lengt
 		x = 0;
 		while (x <= x_length)
 		{
-			pixel_put((x_start + x), (y_start + y), core);
+			//pixel_put((x_start + x), (y_start + y), core);
 			x++;
 		}
 		y++;

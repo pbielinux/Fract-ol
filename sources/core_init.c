@@ -4,16 +4,19 @@ void	init_viewport(t_view *viewport)
 {
 	/* Init to mandelbrot set */
 	viewport->x_min = -2.0f;
-	viewport->x_max = 1.0f;
+	viewport->x_max = 2.0f;
 	viewport->y_min = -1.0f;
 	viewport->y_max = 1.0f;
+	viewport->off_x = -1.0f;
 	viewport->off_x = -0.5f;
+	viewport->zoom = 1.5f;
+	viewport->max = 50;
 }
 
 t_color	*new_color(int ch_A, int ch_R, int ch_G, int ch_B)
 {
 	t_color *new;
-	int			color_value;
+	int			color_value = 0;
 
 	new = (t_color *)malloc(sizeof(t_color));
 	color_value = (ch_A << 24 | ch_R << 16 | ch_G << 8 | ch_B);
@@ -43,7 +46,7 @@ t_ctx		*new_context(int width, int height)
 	ctx->win_ptr = 0;
 	ctx->width = width;
 	ctx->height = height;
-	ctx->rect = &draw_rect;
+	//ctx->rect = &draw_rect;
 
 	return(ctx);
 }
@@ -84,7 +87,7 @@ t_core	*new_core(char *title)
 ** @param	char *title		the title of the window;
 ** @return	void*			the window instance pointer.*/
 	new->ctx->win_ptr = mlx_new_window(new->ctx->mlx_ptr, WIDTH, HEIGHT, title);
-	new->ctx->color = new_color(0xFF, 0xFF, 0xFF, 0xFF);
+	new->ctx->color = new_color(0x00, 0x00, 0xFF, 0x00);
 	init_buff(new->ctx, &new->ctx->buff, WIDTH, HEIGHT);
 	init_viewport(&new->viewport);
 	new->inited = true;
