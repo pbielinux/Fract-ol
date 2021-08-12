@@ -23,6 +23,7 @@ void		reset_viewport(t_core *core)
 {
 	core->ctx->viewport.off_x = 0;
 	core->ctx->viewport.off_y = 0;
+	core->ctx->fractal->viewport(&core->ctx->viewport);
 	viewport_fit(&core->ctx->viewport);
 	core->ctx->viewport.max = 32;
 	core->ctx->viewport.zoom = 1.0f;

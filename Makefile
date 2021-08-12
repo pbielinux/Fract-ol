@@ -29,7 +29,8 @@ SOURCES_LIST = \
 	utilities.c \
 	keyboard_control.c \
 	fracdraw.c \
-	color.c
+	color.c \
+	fractal.c
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))
 
 OBJECTS_DIR = objects/

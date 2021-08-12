@@ -113,10 +113,13 @@ typedef	struct	s_viewport
 	long		max;
 }								t_view;
 
+typedef t_pixel	(*t_fn_pixel)(int x, int y, t_view *viewport);
+typedef void		(*t_fn_view)(t_view *viewport);
+
 typedef	struct	s_fractal
 {
-	t_pixel	(*pixel)(int x, int y, t_view *viewport);
-	void		(*viewport)(t_view *viewport);
+	t_fn_view		viewport;
+	t_fn_pixel	pixel;
 }								t_fractal;
 
 /* Context */
@@ -153,6 +156,7 @@ t_ctx			*new_context(int width, int height);
 void			init_buff(t_ctx *ctx, t_buff **buff, int width, int height);
 void			init_loop(t_core *core);
 int				loop_hook(t_core *core);
+t_fractal	*get_fractal();
 /* Color */
 int				get_color(t_pixel pixel, t_ctx *ctx);
 t_color		linear_color(double iter, int max_iter, t_palette *palette);

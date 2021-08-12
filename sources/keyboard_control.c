@@ -26,22 +26,22 @@ void	move(int key, t_core *core)
 
 	if (key == KB_UP)
 	{
-		ft_putstr("Key W\n");
+		ft_putstr("Key UP\n");
 		core->ctx->viewport.off_y -= height * 0.05f;
 	}
 	if (key == KB_DOWN)
 	{
-		ft_putstr("Key W\n");
+		ft_putstr("Key DOWN\n");
 		core->ctx->viewport.off_y += height * 0.05f;
 	}
 	if (key == KB_LEFT)
 	{
-		ft_putstr("Key W\n");
+		ft_putstr("Key LEFT\n");
 		core->ctx->viewport.off_x -= width * 0.05f;
 	}
 	if (key == KB_RIGHT)
 	{
-		ft_putstr("Key W\n");
+		ft_putstr("Key RIGHT\n");
 		core->ctx->viewport.off_x += width * 0.05f;
 	}
 }
@@ -51,13 +51,14 @@ int	key_press(int key, t_core *core)
 
 	//bzero(core->ctx->buff->addr, WIDTH * HEIGHT * (core->ctx->buff->bits_per_pixel / 8));
 
-	move(key, core);
 
 	if (key == KB_ESC)
 	{
 		ft_putstr("Key ESC\n");
 		exit(0);
 	}
+
+	move(key, core);
 
 	if (key == KB_PLUS)
 		zoom(WIDTH / 2, HEIGHT / 2, &core->ctx->viewport, 1 / 1.1f);
