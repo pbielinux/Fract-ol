@@ -40,8 +40,8 @@
 /*        Viewport Dimensions          */
 /***************************************/
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1280
+# define HEIGHT 720
 
 /***************************************/
 /*             Structures              */
@@ -59,6 +59,11 @@ typedef	struct	s_complex
 	double	i;
 }								t_complex;
 
+typedef	struct	s_pixel
+{
+	t_complex	c;
+	int				iter;
+}								t_pixel;
 
 /* Color Data */
 typedef	struct	s_argb
@@ -69,11 +74,17 @@ typedef	struct	s_argb
 	int	b;
 }								t_argb;
 
-typedef	struct	s_color
+typedef	union	s_color
 {
 	int			value;
-	t_argb	channel;
+	t_argb	argb;
 }								t_color;
+
+typedef	struct	s_palette
+{
+	int	count;
+	int	colors[8];
+}								t_palette;
 
 /* Image Data */
 typedef	struct	s_buffer
@@ -102,26 +113,33 @@ typedef	struct	s_viewport
 	long		max;
 }								t_view;
 
+typedef	struct	s_fractal
+{
+	t_pixel	(*pixel)(int x, int y, t_view *viewport);
+	void		(*viewport)(t_view *viewport);
+}								t_fractal;
+
 /* Context */
 typedef	struct	s_context
 {
-	void		*mlx_ptr;
-	void 		*win_ptr;
-	t_buff	*buff;
-	t_buff	*cur_buff;
-	t_color	*color;
-	int			width;
-	int			height;
-	int			line_length;
-//	void		(*rect)(t_point, struct s_ctx *);
+	void			*mlx_ptr;
+	void 			*win_ptr;
+	t_buff		*buff;
+	t_pixel		*data;
+	t_fractal	*fractal;
+	t_palette	*palette;
+	t_view		viewport;
+	int				width;
+	int				height;
+	int				line_length;
 }								t_ctx;
+
 
 /* Core */
 typedef struct	s_core
 {
 	int			inited;
 	t_ctx		*ctx;
-	t_view	viewport;
 }								t_core;
 
 
@@ -130,29 +148,35 @@ typedef struct	s_core
 /***************************************/
 
 /* Core Init */
-t_core	*new_core(char *title);
-t_ctx		*new_context(int width, int height);
-t_color	*new_color(int ch_A, int ch_R, int ch_G, int ch_B);
-void		init_buff(t_ctx *ctx, t_buff **buff, int width, int height);
-void		init_loop(t_core *core);
-int			loop_hook(t_core *core);
+t_core		*new_core(char *title);
+t_ctx			*new_context(int width, int height);
+void			init_buff(t_ctx *ctx, t_buff **buff, int width, int height);
+void			init_loop(t_core *core);
+int				loop_hook(t_core *core);
+/* Color */
+int				get_color(t_pixel pixel, t_ctx *ctx);
+t_color		linear_color(double iter, int max_iter, t_palette *palette);
+t_color		color_interpolation(t_color c1, t_color c2, double p);
 /* View Port */
-void		reset_viewport(t_core *core);
-void		viewport_fit(t_view *viewport);
+void			mandelbrot_viewport(t_view *viewport);
+void			reset_viewport(t_core *core);
+void			viewport_fit(t_view *viewport);
 /* Utilities */
-void		fps_count(t_core *core);
-int			close_program(void *param);
-void		exit_program(t_core *core, int error_code, char *msg);
-void		draw_rect(t_core *core, int x_start, int x_length, int y_start, int y_length);
+void			fps_count(t_core *core);
+int				close_program(void *param);
+void			exit_program(t_core *core, int error_code, char *msg);
+void			draw_rect(t_core *core, int x_start, int x_length, int y_start, int y_length);
 /* Pixel */
-void		pixel_put(int x, int y, t_core *core);
-void	text_put(t_ctx *ctx, char *str, int x, int y, int color);
+void			pixel_put(t_buff *buff, int x, int y, int color);
+void			text_put(t_ctx *ctx, char *str, int x, int y, int color);
 /* Keyboard Ctrl */
-void		zoom(int x, int y, t_view *viewport, double zoom);
-int			key_press(int key, t_core *core);
+void			zoom(int x, int y, t_view *viewport, double zoom);
+int				key_press(int key, t_core *core);
 /* DrawFract */
-void	draw_fract(t_core *core);
-void	draw_fract_2(t_core *core);
+t_pixel		mandelbrot_pixel(int x, int y, t_view *viewport);
+void			draw(t_core *core);
+void			render(t_core *core);
 t_complex	screen_to_complex(int x, int y, t_view *viewport);
+void			mandelbrot_viewport(t_view *viewport);
 
 #endif // !_FRACTOL_H_

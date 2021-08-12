@@ -1,79 +1,5 @@
 #include "fractol.h"
 
-void	init_viewport(t_view *viewport)
-{
-	/* Init to mandelbrot set */
-	viewport->x_min = -2.0f;
-	viewport->x_max = 2.0f;
-	viewport->y_min = -1.0f;
-	viewport->y_max = 1.0f;
-	viewport->off_x = -1.0f;
-	viewport->off_x = -0.5f;
-	viewport->zoom = 1.5f;
-	viewport->max = 50;
-}
-
-t_color	*new_color(int ch_A, int ch_R, int ch_G, int ch_B)
-{
-	t_color *new;
-	int			color_value = 0;
-
-	new = (t_color *)malloc(sizeof(t_color));
-	color_value = (ch_A << 24 | ch_R << 16 | ch_G << 8 | ch_B);
-	new->channel.a = ch_A;
-	new->channel.r = ch_R;
-	new->channel.g = ch_G;
-	new->channel.b = ch_B;
-
-	new->value = color_value;
-	return (new);
-}
-
-t_ctx		*new_context(int width, int height)
-{
-	t_ctx	*ctx;
-
-	ctx = (t_ctx *)malloc(sizeof(t_ctx));
-	if (!ctx)
-		exit (-1);
-
-	ctx->mlx_ptr = mlx_init();
-	if (ctx->mlx_ptr == NULL)
-	{
-		fprintf(stderr, "Cannot stablish a connection with Display Server\n");
-		exit(1);
-	}
-	ctx->win_ptr = 0;
-	ctx->width = width;
-	ctx->height = height;
-	//ctx->rect = &draw_rect;
-
-	return(ctx);
-}
-
-void	init_buff(t_ctx *ctx, t_buff **buff, int width, int height)
-{
-	(*buff) = malloc(sizeof(t_buff));
-	if ((*buff) == NULL)
-		exit_program(NULL, 5, "Failed to malloc buff");
-	ft_bzero((*buff), sizeof(t_buff));
-	(*buff)->width = width;
-	(*buff)->height = height;
-		ft_putstr(CYAN"INIT BUFF 1920 x 1080 px\n"RST);
-	(*buff)->img = NULL;
-	(*buff)->addr = NULL;
-	(*buff)->img = mlx_new_image(ctx->mlx_ptr, width, height);
-	(*buff)->addr = mlx_get_data_addr((*buff)->img, &(*buff)->bits_per_pixel,
-									&(*buff)->line_length,
-									&(*buff)->endian);
-	(*buff)->max_addr = (*buff)->line_length * (*buff)->height;
-	(*buff)->offset = (*buff)->bits_per_pixel / 8;
-	if ((*buff)->addr == NULL)
-		exit_program(NULL, 5, "Buff address not set");
-	if ((*buff)->img == NULL)
-		exit_program(NULL, 5, "Buff image not set");
-}
-
 t_core	*new_core(char *title)
 {
 	t_core	*new;
@@ -87,32 +13,72 @@ t_core	*new_core(char *title)
 ** @param	char *title		the title of the window;
 ** @return	void*			the window instance pointer.*/
 	new->ctx->win_ptr = mlx_new_window(new->ctx->mlx_ptr, WIDTH, HEIGHT, title);
-	new->ctx->color = new_color(0x00, 0x00, 0xFF, 0x00);
 	init_buff(new->ctx, &new->ctx->buff, WIDTH, HEIGHT);
-	init_viewport(&new->viewport);
 	new->inited = true;
 	return (new);
 }
 
+t_ctx		*new_context(int width, int height)
+{
+	t_ctx	*ctx;
+
+	ctx = (t_ctx *)malloc(sizeof(t_ctx));
+	if (!ctx)
+		exit_program(NULL, 5, "Failed to malloc context\n");
+
+	ctx->mlx_ptr = mlx_init();
+	if (ctx->mlx_ptr == NULL)
+		exit_program(NULL, 5, "Cannot stablish a connection with Display Server\n");
+
+	ctx->data = malloc(sizeof(t_pixel) * WIDTH * HEIGHT);
+	if (ctx->data == NULL)
+		exit_program(NULL, 5, "Failed to malloc data\n");
+
+	ctx->win_ptr = 0;
+	ctx->width = width;
+	ctx->height = height;
+
+	ctx->fractal = (t_fractal *)malloc(sizeof(t_fractal));
+	ctx->fractal->viewport = mandelbrot_viewport;
+	ctx->fractal->pixel = mandelbrot_pixel;
+
+	ctx->palette = (t_palette *)malloc(sizeof(t_palette));
+	ctx->palette->count = 5;
+	ctx->palette->colors[0] = 0x7F1637;
+	ctx->palette->colors[1] = 0x047878;
+	ctx->palette->colors[2] = 0xFFB733;
+	ctx->palette->colors[3] = 0xF57336;
+	ctx->palette->colors[4] = 0xC22121;
+
+	return(ctx);
+}
+
+void	init_buff(t_ctx *ctx, t_buff **buff, int width, int height)
+{
+	(*buff) = (t_buff *)malloc(sizeof(t_buff));
+	if ((*buff) == NULL)
+		exit_program(NULL, 5, "Failed to malloc buff");
+	(*buff)->width = width;
+	(*buff)->height = height;
+		ft_putstr(CYAN"INIT BUFF\n"RST);
+	(*buff)->img = NULL;
+	(*buff)->addr = NULL;
+	(*buff)->img = mlx_new_image(ctx->mlx_ptr, width, height);
+	(*buff)->addr = mlx_get_data_addr((*buff)->img, &(*buff)->bits_per_pixel,
+									&(*buff)->line_length,
+									&(*buff)->endian);
+	(*buff)->max_addr = (*buff)->line_length * (*buff)->height;
+	(*buff)->bits_per_pixel /= 8;
+	if ((*buff)->addr == NULL)
+		exit_program(NULL, 5, "Buff address not set");
+	if ((*buff)->img == NULL)
+		exit_program(NULL, 5, "Buff image not set");
+}
+
 int		loop_hook(t_core *core)
 {
-	char	color_value[200];
-	char	color_channels[200];
-
-	sprintf(color_value,"Color Value: 0x%X", core->ctx->color->value);
-	sprintf(color_channels,"Ch_A: 0x%X,	Ch_R: 0x%X,	Ch_G: 0x%X,	Ch_B: 0x%X",
-				core->ctx->color->channel.a,
-				core->ctx->color->channel.r,
-				core->ctx->color->channel.g,
-				core->ctx->color->channel.b);
-
-
-	mlx_put_image_to_window(core->ctx->mlx_ptr, core->ctx->win_ptr, core->ctx->buff->img, 0, 0);
-
 	fps_count(core);
-	text_put(core->ctx, color_value, 20, 10, 0xFFFFFFFF);
-	text_put(core->ctx, color_channels, 20, 40, 0xFFFFFFFF);
-
+	render(core);
 	return (core->inited);
 }
 

@@ -28,7 +28,8 @@ SOURCES_LIST = \
 	pixel.c \
 	utilities.c \
 	keyboard_control.c \
-	fracdraw.c
+	fracdraw.c \
+	color.c
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))
 
 OBJECTS_DIR = objects/

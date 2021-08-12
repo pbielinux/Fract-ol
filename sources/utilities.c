@@ -1,4 +1,5 @@
 #include "fractol.h"
+
 void		viewport_fit(t_view *viewport)
 {
 	double width;
@@ -20,11 +21,11 @@ void		viewport_fit(t_view *viewport)
 
 void		reset_viewport(t_core *core)
 {
-	core->viewport.off_x = 0;
-	core->viewport.off_y = 0;
-	viewport_fit(&core->viewport);
-	core->viewport.max = 32;
-	core->viewport.zoom = 1.0f;
+	core->ctx->viewport.off_x = 0;
+	core->ctx->viewport.off_y = 0;
+	viewport_fit(&core->ctx->viewport);
+	core->ctx->viewport.max = 32;
+	core->ctx->viewport.zoom = 1.0f;
 }
 
 void		fps_count(t_core *core)
@@ -74,13 +75,13 @@ int	close_program(void *param)
 	exit(0);
 }
 
-void	draw_rect(t_core *core, int x_start, int x_length, int y_start, int y_length)
+/* void	draw_rect(t_core *core, int x_start, int x_length, int y_start, int y_length)
 {
 	int x;
 	int y;
 
-/*  	ft_bzero(core->ctx->buff->addr,
-		WIDTH * HEIGHT * (core->ctx->buff->bits_per_pixel / 8)); */
+	ft_bzero(core->ctx->buff->addr,
+		WIDTH * HEIGHT * (core->ctx->buff->bits_per_pixel / 8));
 
 
 
@@ -95,4 +96,4 @@ void	draw_rect(t_core *core, int x_start, int x_length, int y_start, int y_lengt
 		}
 		y++;
 	}
-}
+} */

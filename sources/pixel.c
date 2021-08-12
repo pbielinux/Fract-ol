@@ -5,10 +5,10 @@ void	text_put(t_ctx *ctx, char *str, int x, int y, int color)
 	mlx_string_put(ctx->mlx_ptr, ctx->win_ptr, x, y, color, str);
 }
 
-void	pixel_put(int x, int y, t_core *core)
+void	pixel_put(t_buff *buff, int x, int y, int color)
 {
-	int	offset;
+	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
+		return ;
 
-	offset = ((y * core->ctx->buff->line_length) + (x * core->ctx->buff->bits_per_pixel / 8));
-		*(unsigned int *)(core->ctx->buff->addr + offset) = core->ctx->color->value;
+	*(int *)(buff->img + ((x + y * WIDTH) * buff->bits_per_pixel)) = color;
 }
