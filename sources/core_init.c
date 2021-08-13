@@ -41,12 +41,13 @@ t_ctx		*new_context(int width, int height)
 	ctx->height = height;
 
 	ctx->palette = (t_palette *)malloc(sizeof(t_palette));
-	ctx->palette->count = 5;
-	ctx->palette->colors[0] = 0x7F1637;
-	ctx->palette->colors[1] = 0x047878;
-	ctx->palette->colors[2] = 0xFFB733;
-	ctx->palette->colors[3] = 0xF57336;
-	ctx->palette->colors[4] = 0xC22121;
+	ctx->palette = get_palette(1);
+
+	printf("Palette Color 0: %X \n", ctx->palette->colors[0]);
+	printf("Palette Color 1: %X \n", ctx->palette->colors[1]);
+	printf("Palette Color 2: %X \n", ctx->palette->colors[2]);
+	printf("Palette Color 3: %X \n", ctx->palette->colors[3]);
+	printf("Palette Color 4: %X \n", ctx->palette->colors[4]);
 
 	return(ctx);
 }

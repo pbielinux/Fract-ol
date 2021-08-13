@@ -4,7 +4,7 @@ void	mandelbrot_viewport(t_view *viewport)
 {
 	/* Init to mandelbrot set */
 	viewport->x_min = -2.0f;
-	viewport->x_max = 1.0f;
+	viewport->x_max = 2.0f;
 	viewport->y_min = -1.0f;
 	viewport->y_max = 1.0f;
 	viewport->off_x = -0.5f;
@@ -26,6 +26,7 @@ t_pixel	mandelbrot_pixel(int x, int y, t_view *viewport)
 	t_complex	z;
 	t_complex	c;
 	t_complex	temp;
+	t_pixel		pixel;
 	double		i;
 
 	z = screen_to_complex(x, y, viewport);
@@ -44,7 +45,9 @@ t_pixel	mandelbrot_pixel(int x, int y, t_view *viewport)
 		z.i = temp.i;
 		i++;
 	}
-	return ((t_pixel){.c = z, .iter = i});
+	pixel.c = z;
+	pixel.iter = i;
+	return (pixel);
 }
 /*
 void	draw_fract(t_core *core)
@@ -93,13 +96,13 @@ void	render(t_core *core)
 	int				x;
 	int				y;
 
-	x = 0;
 	y = 0;
 	while (y < core->ctx->height)
 	{
+		x = 0;
 		while (x < core->ctx->width)
 		{
-			*(core->ctx->data + x + y * WIDTH) = core->ctx->fractal->pixel(x, y, &core->ctx->viewport);
+			*(core->ctx->data + y * WIDTH + x) = core->ctx->fractal->pixel(x, y, &core->ctx->viewport);
 			x++;
 		}
 		y++;
@@ -113,17 +116,16 @@ void	draw(t_core *core)
 	int				y;
 	int				color;
 
-	x = 0;
 	y = 0;
 	while (y < core->ctx->height)
 	{
+		x = 0;
 		while (x < core->ctx->width)
 		{
-			color = get_color(*(core->ctx->data + x + y * WIDTH), core->ctx);
+			color = get_color(*(core->ctx->data + y * WIDTH + x), core->ctx);
 			pixel_put(core->ctx->buff, x, y, color);
 			x++;
 		}
-			printf("X: %d Y: %d = %X   ", x, y, color);
 		y++;
 	}
 	mlx_put_image_to_window(core->ctx->mlx_ptr, core->ctx->win_ptr, core->ctx->buff->img, 0, 0);

@@ -66,24 +66,24 @@ typedef	struct	s_pixel
 }								t_pixel;
 
 /* Color Data */
-typedef	struct	s_argb
+typedef	struct	s_rgba
 {
-	int	a;
-	int	r;
-	int	g;
-	int	b;
-}								t_argb;
+	uint8_t	r;
+	uint8_t	g;
+	uint8_t	b;
+	uint8_t	a;
+}								t_rgba;
 
-typedef	union	s_color
+typedef	union	u_color
 {
 	int			value;
-	t_argb	argb;
-}								t_color;
+	t_rgba	argb;
+}							t_color;
 
 typedef	struct	s_palette
 {
-	int	count;
-	int	colors[8];
+	int			count;
+	int			colors[8];
 }								t_palette;
 
 /* Image Data */
@@ -158,6 +158,7 @@ void			init_loop(t_core *core);
 int				loop_hook(t_core *core);
 t_fractal	*get_fractal();
 /* Color */
+t_palette	*get_palette(int index);
 int				get_color(t_pixel pixel, t_ctx *ctx);
 t_color		linear_color(double iter, int max_iter, t_palette *palette);
 t_color		color_interpolation(t_color c1, t_color c2, double p);

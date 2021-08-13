@@ -30,7 +30,8 @@ SOURCES_LIST = \
 	keyboard_control.c \
 	fracdraw.c \
 	color.c \
-	fractal.c
+	fractal.c \
+	palette.c
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))
 
 OBJECTS_DIR = objects/

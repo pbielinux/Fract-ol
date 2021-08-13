@@ -7,12 +7,11 @@ t_color		color_interpolation(t_color c1, t_color c2, double p)
 	if (c1.value == c2.value)
 		return (c1);
 
-	c.argb.a = (char)0x00;
-	c.argb.r = (char)ft_lerpi((int)c1.argb.r, (int)c2.argb.r, p);
-	c.argb.g = (char)ft_lerpi((int)c1.argb.g, (int)c2.argb.g, p);
 	c.argb.b = (char)ft_lerpi((int)c1.argb.b, (int)c2.argb.b, p);
+	c.argb.g = (char)ft_lerpi((int)c1.argb.g, (int)c2.argb.g, p);
+	c.argb.r = (char)ft_lerpi((int)c1.argb.r, (int)c2.argb.r, p);
+	c.argb.a = (char)0x00;
 
-	c.value = (c.argb.a << 24, c.argb.r << 16, c.argb.g << 8, c.argb.b);
 
 	return (c);
 }
@@ -37,10 +36,10 @@ t_color	linear_color(double iter, int max_iter, t_palette *palette)
 
 int	get_color(t_pixel pixel, t_ctx *ctx)
 {
-	t_color	color;
+	if (pixel.iter >= ctx->viewport.max)
+		return (0x00000000);
 
-	color = linear_color((double)pixel.iter, ctx->viewport.max, ctx->palette);
-	return (color.value);
+	return (linear_color((double)pixel.iter, ctx->viewport.max, ctx->palette).value);
 }
 
 

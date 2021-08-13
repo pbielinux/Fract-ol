@@ -64,12 +64,17 @@ int	key_press(int key, t_core *core)
 		zoom(WIDTH / 2, HEIGHT / 2, &core->ctx->viewport, 1 / 1.1f);
 	if (key == KB_MINUS)
 		zoom(WIDTH / 2, HEIGHT / 2, &core->ctx->viewport, 1.1f);
+	if (key == KB_0)
+		reset_viewport(core);
 
 	if (key == KB_W)
 		core->ctx->viewport.max++;
 
 	if (key == KB_S)
 		core->ctx->viewport.max--;
+
+	if (key == KB_1)
+		core->ctx->palette->colors[2] += 0x00001000;
 
 	render(core);
 	return (0);
