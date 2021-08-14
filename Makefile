@@ -17,21 +17,31 @@ MLX_HEADERS = $(MLX_DIR)
 
 HEADERS_LIST = \
 	fractol.h \
-	macos_keys.h
+	macos_keys.h \
+	types.h \
+	core_utils.h
 HEADERS_DIR = ./includes/
 HEADERS = $(addprefix $(HEADERS_DIR), $(HEADERS_LIST))
 
 SOURCES_DIR = ./sources/
 SOURCES_LIST = \
-	fractol.c \
-	core_init.c \
-	pixel.c \
-	utilities.c \
-	keyboard_control.c \
-	fracdraw.c \
+	buffer.c \
 	color.c \
+	context.c \
+	core.c \
+	exit_error.c \
 	fractal.c \
-	palette.c
+	keyboard_control.c \
+	loop.c \
+	main.c \
+	mandelbrot.c \
+	memory_utils.c \
+	palette.c \
+	pixel.c \
+	render.c \
+	utilities.c \
+	viewport.c
+
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))
 
 OBJECTS_DIR = objects/
