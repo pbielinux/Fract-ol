@@ -11,7 +11,7 @@ t_ctx		*new_context(int width, int height)
 		ft_exit_error(NULL, MLX_INIT_FAIL);
 	ctx->data = ft_malloc_or_exit(sizeof(t_pixel) * WIDTH * HEIGHT);
 	ctx->buff = new_buffer(ctx, WIDTH, HEIGHT);
-	ctx->fractal = get_fractal();
+	ctx->fractal = get_fractal(2);
 	ctx->win_ptr = 0;
 	ctx->width = width;
 	ctx->height = height;

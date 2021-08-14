@@ -57,7 +57,7 @@ void			init_loop(t_core *core);
 int				loop_hook(t_core *core);
 t_fractal	*get_fractal();
 /* Color */
-t_palette	*get_palette(int index);
+t_palette	get_palette(int index);
 int				get_color(t_pixel pixel, t_ctx *ctx);
 t_color		linear_color(double iter, int max_iter, t_palette *palette);
 t_color		color_interpolation(t_color c1, t_color c2, double p);
@@ -77,10 +77,12 @@ void			text_put(t_ctx *ctx, char *str, int x, int y, int color);
 void			zoom(int x, int y, t_view *viewport, double zoom);
 int				key_press(int key, t_core *core);
 /* DrawFract */
-t_pixel		mandelbrot_pixel(int x, int y, t_view *viewport);
 void			draw(t_core *core);
 void			render(t_core *core);
 t_complex	screen_to_complex(int x, int y, t_view *viewport);
+t_pixel		mandelbrot_pixel(int x, int y, t_view *viewport);
 void			mandelbrot_viewport(t_view *viewport);
+t_pixel		julia_pixel(int x, int y, t_view *viewport);
+void			julia_viewport(t_view *viewport);
 
 #endif // !_FRACTOL_H_

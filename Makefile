@@ -31,6 +31,7 @@ SOURCES_LIST = \
 	core.c \
 	exit_error.c \
 	fractal.c \
+	julia.c \
 	keyboard_control.c \
 	loop.c \
 	main.c \

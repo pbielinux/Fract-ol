@@ -11,7 +11,8 @@ t_core	*new_core(char *title)
 ** @param	int  size_x		the width of the window;
 ** @param	int  size_y		the height of the window;
 ** @param	char *title		the title of the window;
-** @return	void*			the window instance pointer.*/
+** @return	void*			the window instance pointer.
+*/
 	new->ctx->win_ptr = mlx_new_window(new->ctx->mlx_ptr, WIDTH, HEIGHT, title);
 	new->inited = true;
 	return (new);

@@ -95,7 +95,7 @@ typedef	struct	s_context
 	t_buff		*buff;
 	t_pixel		*data;
 	t_fractal	*fractal;
-	t_palette	*palette;
+	t_palette	palette;
 	t_view		viewport;
 	int				width;
 	int				height;

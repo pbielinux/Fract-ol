@@ -39,7 +39,7 @@ int	get_color(t_pixel pixel, t_ctx *ctx)
 	if (pixel.iter >= ctx->viewport.max)
 		return (0x00000000);
 
-	return (linear_color((double)pixel.iter, ctx->viewport.max, ctx->palette).value);
+	return (linear_color((double)pixel.iter, ctx->viewport.max, &ctx->palette).value);
 }
 
 
