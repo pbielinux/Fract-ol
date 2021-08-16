@@ -65,19 +65,6 @@ int	key_press(int key, t_core *core)
 		core->ctx->fractal->viewport(&core->ctx->viewport);
 		reset_viewport(core);
 	}
-	if (key == KB_9)
-	{
-		if (!core->gui)
-		{
-			draw_rect(core, 30, 300, 20, 400);
-			core->gui = 1;
-		}
-		else
-		{
-			clear_image(core->ctx->gui);
-			core->gui = 0;
-		}
-	}
 	if (key == KB_W)
 		core->ctx->viewport.max++;
 	if (key == KB_S)

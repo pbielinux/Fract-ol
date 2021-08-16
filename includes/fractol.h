@@ -42,6 +42,8 @@
 /*        Viewport Dimensions          */
 /***************************************/
 
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
 # define WIDTH 1280
 # define HEIGHT 720
 
@@ -53,6 +55,7 @@
 t_ctx			*new_context(int width, int height);
 t_core		*new_core(char *title);
 t_buff		*new_buffer(t_ctx *ctx, int width, int height);
+t_buff		*new_gui(t_ctx *ctx, int width, int height);
 void			init_loop(t_core *core);
 int				loop_hook(t_core *core);
 t_fractal	*get_fractal();
@@ -66,12 +69,12 @@ void			mandelbrot_viewport(t_view *viewport);
 void			reset_viewport(t_core *core);
 void			viewport_fit(t_view *viewport);
 /* Utilities */
+void			draw_gui(t_core *core);
 void			fps_count(t_core *core);
-void			draw_rect(t_core *core, int x_start, int x_len, int y_start, int y_len);
-void			clear_image(t_buff *image);
+void			draw_rect(t_buff *buff, int x_start, int x_len, int y_start, int y_len);
+void			clear_image(t_buff *image, int	width, int height);
 int				close_program(void *param);
 void			exit_program(t_core *core, int error_code, char *msg);
-void			draw_rect(t_core *core, int x_start, int x_length, int y_start, int y_length);
 /* Pixel */
 void			pixel_put(t_buff *buff, int x, int y, int color);
 void			text_put(t_ctx *ctx, char *str, int x, int y, int color);

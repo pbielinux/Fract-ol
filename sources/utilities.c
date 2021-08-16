@@ -46,38 +46,16 @@ void	fps_count(t_core *core)
 	}
 }
 
-void	draw_rect(t_core *core, int x_start, int x_len, int y_start, int y_len)
+void	clear_image(t_buff *image, int	width, int height)
 {
 	int	x;
 	int	y;
 
 	y = 0;
-	while (y < HEIGHT)
+	while (y < width)
 	{
 		x = 0;
-		while (x < WIDTH)
-		{
-			if ((x >= x_start && x - x_start < x_len)
-				&& (y >= y_start && y - y_start < y_len))
-				pixel_put(core->ctx->gui, x, y, 0xAA000000);
-			else
-				pixel_put(core->ctx->gui, x, y, 0xFFFFFFFF);
-			x++;
-		}
-		y++;
-	}
-}
-
-void	clear_image(t_buff *image)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < HEIGHT)
-	{
-		x = 0;
-		while (x < WIDTH)
+		while (x < height)
 		{
 			pixel_put(image, x, y, 0xFF000000);
 			x++;

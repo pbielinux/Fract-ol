@@ -55,7 +55,7 @@ typedef	struct	s_palette
 /* Image Data */
 typedef	struct	s_buffer
 {
-	bool		initied;
+	bool	initied;
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;

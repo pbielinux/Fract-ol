@@ -41,7 +41,8 @@ SOURCES_LIST = \
 	pixel.c \
 	render.c \
 	utilities.c \
-	viewport.c
+	viewport.c \
+	gui.c
 
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))
 

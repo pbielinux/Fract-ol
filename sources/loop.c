@@ -3,13 +3,13 @@
 int	loop_hook(t_core *core)
 {
 	draw(core);
-	text_put(core->ctx, "Iterations:", 20, 30, 0xFFFFFFFF);
-	text_put(core->ctx, ft_itoa(core->ctx->viewport.max), 150, 30, 0xFFFFFFFF);
 	fps_count(core);
-	mlx_put_image_to_window(core->ctx->mlx_ptr, core->ctx->win_ptr,
-		core->ctx->buff->img, 0, 0);
+	draw_gui(core);
 	mlx_put_image_to_window(core->ctx->mlx_ptr, core->ctx->win_ptr,
 		core->ctx->gui->img, 0, 0);
+	mlx_put_image_to_window(core->ctx->mlx_ptr, core->ctx->win_ptr,
+		core->ctx->buff->img, 278, 174);
+	text_put(core->ctx, "MANDELBROT SET", 883, 15, 0xFFFFFFFF);
 	return (core->inited);
 }
 
