@@ -2,12 +2,12 @@
 
 void	mandelbrot_viewport(t_view *viewport)
 {
-	/* Init to mandelbrot set */
 	viewport->x_min = -2.0f;
 	viewport->x_max = 2.0f;
 	viewport->y_min = -1.0f;
 	viewport->y_max = 1.0f;
 	viewport->off_x = -0.5f;
+	viewport->off_y = 0.0f;
 }
 
 t_pixel	mandelbrot_pixel(int x, int y, t_view *viewport)

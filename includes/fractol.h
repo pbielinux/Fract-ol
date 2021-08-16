@@ -67,6 +67,8 @@ void			reset_viewport(t_core *core);
 void			viewport_fit(t_view *viewport);
 /* Utilities */
 void			fps_count(t_core *core);
+void			draw_rect(t_core *core, int x_start, int x_len, int y_start, int y_len);
+void			clear_image(t_buff *image);
 int				close_program(void *param);
 void			exit_program(t_core *core, int error_code, char *msg);
 void			draw_rect(t_core *core, int x_start, int x_length, int y_start, int y_length);

@@ -55,6 +55,8 @@ GREEN = \033[0;32m
 GREENGREEN = \033[38;5;46m
 RED = \033[0;31m
 BLUE = \033[0;34m
+GREY = \033[38;5;240m
+RESET = \033[0m
 
 .PHONY: all clean fclean re
 
@@ -62,40 +64,41 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(MLX) $(OBJECTS_DIR) $(OBJECTS)
 	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS) -o $(NAME)
-	@echo "$(GREENGREEN)$(NAME): $(GREEN)object files were created$(RESET)"
-	@echo "$(GREENGREEN)$(NAME): $(GREEN)$(NAME) was created$(RESET)"
+	@echo "\n\n[$(GREENGREEN)$(NAME)$(RESET)]: Object files were created\n"
+	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: $(NAME) was created\n$(GREENGREEN)"
+	@cat $(HEADERS_DIR)logo
 
 $(OBJECTS_DIR):
 	@mkdir -p $(OBJECTS_DIR)
-	@echo "$(GREENGREEN)$(NAME): $(GREEN)$(OBJECTS_DIR) was created\n$(RESET)"
+	@echo "\n[$(GREENGREEN)$(NAME)$(RESET)]: Objects Directory was created\n"
 
 $(OBJECTS_DIR)%.o : $(SOURCES_DIR)%.c $(HEADERS)
 	@$(CC) $(FLAGS) -c $(INCLUDES) $< -o $@
-	@echo "$(GREEN).$(RESET)\c"
+	@echo "$(GREEN)//$(RESET)\c"
 
 $(LIBFT):
-	@echo "$(NAME): $(GREEN)Creating $(LIBFT)...$(RESET)"
+	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: Creating $(LIBFT)...$(RESET)"
 	@make -C $(LIBFT_DIR)
 
 $(MLX):
-	@echo "$(GREENGREEN)$(NAME): $(GREEN)Creating $(MLX)...$(RESET)"
+	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: Creating $(MLX)...$(GREY)"
 	@make -C $(MLX_DIR)
-	@echo "$(GREENGREEN)$(NAME): $(GREEN)MLX Objects were created$(RESET)"
+	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: MLX Objects were created"
 
 clean:
 	@make -C $(LIBFT_DIR) clean
 	@make -C $(MLX_DIR) clean
 	@rm -rf $(OBJECTS_DIR)
-	@echo "$(NAME): $(RED)$(OBJECTS_DIR) was deleted$(RESET)"
-	@echo "$(NAME): $(RED)object files were deleted$(RESET)"
+	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: $(RED)Objects Directory was deleted$(RESET)"
+	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: $(RED)Object Files were deleted$(RESET)"
 
 fclean: clean
 	@rm -f $(MLX)
-	@echo "$(NAME): $(RED)$(MLX) was deleted$(RESET)"
+	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: $(RED)$(MLX) was deleted$(RESET)"
 	@rm -f $(LIBFT)
-	@echo "$(NAME): $(RED)$(LIBFT) was deleted$(RESET)"
+	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: $(RED)$(LIBFT) was deleted$(RESET)"
 	@rm -f $(NAME)
-	@echo "$(NAME): $(RED)$(NAME) was deleted$(RESET)"
+	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: $(RED)$(NAME) was deleted$(RESET)\n"
 
 re:
 	@make fclean

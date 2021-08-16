@@ -11,7 +11,6 @@ void	ft_exit_error(t_core *core, t_exit_code exit_code)
 
 static void	ft_print_err(t_exit_code exit_code)
 {
-
 	if (exit_code == MEMORY_FAIL)
 		printf("Error: Can't allocate memory\n");
 	else if (exit_code == BUFF_NOT_SET)

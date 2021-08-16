@@ -1,11 +1,11 @@
 #include "fractol.h"
 
-void		zoom(int x, int y, t_view *viewport, double zoom)
+void	zoom(int x, int y, t_view *viewport, double zoom)
 {
-	double width;
-	double height;
-	double new_width;
-	double new_height;
+	double	width;
+	double	height;
+	double	new_width;
+	double	new_height;
 
 	width = (viewport->x_max - viewport->x_min) * (viewport->zoom);
 	height = (viewport->y_max - viewport->y_min) * (viewport->zoom);
@@ -18,12 +18,13 @@ void		zoom(int x, int y, t_view *viewport, double zoom)
 
 void	move(int key, t_core *core)
 {
-	double width;
-	double height;
+	double	width;
+	double	height;
 
-	width = (core->ctx->viewport.x_max - core->ctx->viewport.x_min) * core->ctx->viewport.zoom;
-	height = (core->ctx->viewport.y_max - core->ctx->viewport.y_min) * core->ctx->viewport.zoom;
-
+	width = (core->ctx->viewport.x_max - core->ctx->viewport.x_min)
+		* core->ctx->viewport.zoom;
+	height = (core->ctx->viewport.y_max - core->ctx->viewport.y_min)
+		* core->ctx->viewport.zoom;
 	if (key == KB_UP)
 	{
 		ft_putstr("Key UP\n");
@@ -48,41 +49,53 @@ void	move(int key, t_core *core)
 
 int	key_press(int key, t_core *core)
 {
-
-	//bzero(core->ctx->buff->addr, WIDTH * HEIGHT * (core->ctx->buff->bits_per_pixel / 8));
-
-
 	if (key == KB_ESC)
 	{
 		ft_putstr("Key ESC\n");
+		ft_free_core(core);
 		exit(0);
 	}
-
 	move(key, core);
-
 	if (key == KB_PLUS)
 		zoom(WIDTH / 2, HEIGHT / 2, &core->ctx->viewport, 1 / 1.1f);
 	if (key == KB_MINUS)
 		zoom(WIDTH / 2, HEIGHT / 2, &core->ctx->viewport, 1.1f);
 	if (key == KB_0)
+	{
+		core->ctx->fractal->viewport(&core->ctx->viewport);
 		reset_viewport(core);
-
+	}
+	if (key == KB_9)
+	{
+		if (!core->gui)
+		{
+			draw_rect(core, 30, 300, 20, 400);
+			core->gui = 1;
+		}
+		else
+		{
+			clear_image(core->ctx->gui);
+			core->gui = 0;
+		}
+	}
 	if (key == KB_W)
 		core->ctx->viewport.max++;
-
 	if (key == KB_S)
 		core->ctx->viewport.max--;
-
 	if (key == KB_1)
 		core->ctx->palette = get_palette(1);
 	if (key == KB_2)
 		core->ctx->palette = get_palette(2);
-
 	if (key == KB_A)
+	{
 		core->ctx->fractal = get_fractal(1);
+		reset_viewport(core);
+	}
 	if (key == KB_D)
+	{
 		core->ctx->fractal = get_fractal(2);
-
+		reset_viewport(core);
+	}
 	render(core);
 	return (0);
 }

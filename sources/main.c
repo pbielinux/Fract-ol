@@ -1,6 +1,6 @@
 #include "fractol.h"
 
-int	main()
+int	main(void)
 {
 	t_core		*core;
 
@@ -8,6 +8,5 @@ int	main()
 	reset_viewport(core);
 	render(core);
 	init_loop(core);
-
 	return (0);
 }

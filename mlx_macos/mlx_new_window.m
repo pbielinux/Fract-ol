@@ -640,7 +640,13 @@ int get_mouse_button(NSEventType eventtype)
 
 // mlx API
 
-
+/*	Create a new window.
+** @param	void *mlx_ptr	the mlx instance pointer;
+** @param	int  size_x		the width of the window;
+** @param	int  size_y		the height of the window;
+** @param	char *title		the title of the window;
+** @return	void*			the window instance pointer.
+*/
 void *mlx_new_window(mlx_ptr_t *mlx_ptr, int size_x, int size_y, char *title)
 {
   mlx_win_list_t	*newwin;
