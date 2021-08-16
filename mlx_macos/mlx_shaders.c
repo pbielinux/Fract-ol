@@ -1,5 +1,6 @@
 //  mlx_shaders.c
 
+#define GL_SILENCE_DEPRECATION
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

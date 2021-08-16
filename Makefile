@@ -52,8 +52,9 @@ OBJECTS	= $(addprefix $(OBJECTS_DIR), $(OBJECTS_LIST))
 # COLORS
 
 GREEN = \033[0;32m
+GREENGREEN = \033[38;5;46m
 RED = \033[0;31m
-RESET = \033[0m
+BLUE = \033[0;34m
 
 .PHONY: all clean fclean re
 
@@ -61,12 +62,12 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(MLX) $(OBJECTS_DIR) $(OBJECTS)
 	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS) -o $(NAME)
-	@echo "\n$(NAME): $(GREEN)object files were created$(RESET)"
-	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
+	@echo "$(GREENGREEN)$(NAME): $(GREEN)object files were created$(RESET)"
+	@echo "$(GREENGREEN)$(NAME): $(GREEN)$(NAME) was created$(RESET)"
 
 $(OBJECTS_DIR):
 	@mkdir -p $(OBJECTS_DIR)
-	@echo "$(NAME): $(GREEN)$(OBJECTS_DIR) was created$(RESET)"
+	@echo "$(GREENGREEN)$(NAME): $(GREEN)$(OBJECTS_DIR) was created\n$(RESET)"
 
 $(OBJECTS_DIR)%.o : $(SOURCES_DIR)%.c $(HEADERS)
 	@$(CC) $(FLAGS) -c $(INCLUDES) $< -o $@
@@ -77,8 +78,9 @@ $(LIBFT):
 	@make -C $(LIBFT_DIR)
 
 $(MLX):
-	@echo "$(NAME): $(GREEN)Creating $(MLX)...$(RESET)"
+	@echo "$(GREENGREEN)$(NAME): $(GREEN)Creating $(MLX)...$(RESET)"
 	@make -C $(MLX_DIR)
+	@echo "$(GREENGREEN)$(NAME): $(GREEN)MLX Objects were created$(RESET)"
 
 clean:
 	@make -C $(LIBFT_DIR) clean

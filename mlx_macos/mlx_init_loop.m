@@ -1,6 +1,7 @@
 //  mlx_init_loop.m
 // By Ol
 
+#define GL_SILENCE_DEPRECATION
 #import <Cocoa/Cocoa.h>
 #import <OpenGL/gl3.h>
 #import <AppKit/NSOpenGLView.h>
