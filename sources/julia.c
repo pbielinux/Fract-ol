@@ -22,8 +22,8 @@ t_pixel	julia_pixel(int x, int y, t_view *viewport)
 	i = 0;
 	while (z.r * z.r + z.i * z.i < (1 << 8) && i < viewport->max)
 	{
-		temp.r = z.r * z.r - z.i * z.i - 0.835;
-		temp.i = z.r * z.i * 2 - 0.2321;
+		temp.r = z.r * z.r - z.i * z.i + viewport->mouse.r;
+		temp.i = z.r * z.i * 2 + viewport->mouse.i;
 		if (z.r == temp.r && z.i == temp.i)
 		{
 			i = viewport->max;

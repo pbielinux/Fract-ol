@@ -27,4 +27,6 @@ void	reset_viewport(t_core *core)
 	viewport_fit(&core->ctx->viewport);
 	core->ctx->viewport.max = 32;
 	core->ctx->viewport.zoom = 1.0f;
+	core->ctx->viewport.mouse.r = -0.835f;
+	core->ctx->viewport.mouse.i = -0.232f;
 }

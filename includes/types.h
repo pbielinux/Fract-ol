@@ -25,6 +25,11 @@ typedef	struct	s_complex
 	double	i;
 }								t_complex;
 
+typedef	struct	s_mouse
+{
+	int	is_down;
+}								t_mouse;
+
 typedef	struct	s_pixel
 {
 	t_complex	c;
@@ -68,14 +73,15 @@ typedef	struct	s_buffer
 
 typedef	struct	s_viewport
 {
-	double	x_min;
-	double	x_max;
-	double	y_min;
-	double	y_max;
-	double	zoom;
-	double	off_x;
-	double	off_y;
-	long		max;
+	double			x_min;
+	double			x_max;
+	double			y_min;
+	double			y_max;
+	double			zoom;
+	double			off_x;
+	double			off_y;
+	long				max;
+	t_complex		mouse;
 }								t_view;
 
 typedef t_pixel	(*t_fn_pixel)(int x, int y, t_view *viewport);
@@ -111,6 +117,7 @@ typedef struct	s_core
 	t_buff	*gui;
 	t_buff	*configs;
 	t_buff	*window;
+	t_mouse	mouse;
 }								t_core;
 
 #endif /* TYPES_H */

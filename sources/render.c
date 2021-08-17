@@ -28,16 +28,16 @@ void	render(t_core *core)
 		}
 		y++;
 	}
-	draw(core);
+	draw_fractal(core);
 }
 
-void	draw(t_core *core)
+void	draw_fractal(t_core *core)
 {
 	int				x;
 	int				y;
 	int				color;
 
-	mlx_put_image_to_window(core->ctx->mlx_ptr, core->ctx->win_ptr, core->window->img, 304, 151);
+	draw_window(core, 380, 151);
 	y = 0;
 	while (y < core->ctx->height)
 	{
@@ -51,5 +51,9 @@ void	draw(t_core *core)
 		y++;
 	}
 	mlx_put_image_to_window(core->ctx->mlx_ptr, core->ctx->win_ptr,
-		core->ctx->buff->img, 306, 180);
+		core->ctx->buff->img, 382, 180);
+	if (!ft_strncmp(core->ctx->fractal->name, "Mandelbrot Set", 8))
+		text_put(core->ctx, "Mandelbrot Set", 960, 155, 0x00000000);
+	else if (!ft_strncmp(core->ctx->fractal->name, "Julia Set", 8))
+		text_put(core->ctx, "Julia Set", 990, 155, 0x00000000);
 }

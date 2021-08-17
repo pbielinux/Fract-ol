@@ -42,7 +42,8 @@ SOURCES_LIST = \
 	render.c \
 	utilities.c \
 	viewport.c \
-	gui.c
+	gui.c \
+	mouse_control.c
 
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))
 

@@ -71,7 +71,8 @@ void			reset_viewport(t_core *core);
 void			viewport_fit(t_view *viewport);
 /* Utilities */
 void			draw_gui(t_core *core);
-void			draw_configs(t_core *core);
+void			draw_configs(t_core *core, int x, int y);
+void			draw_window(t_core *core, int x, int y);
 void			fps_count(t_core *core);
 void			draw_rect(t_buff *buff, int x_start, int x_len, int y_start, int y_len);
 void			clear_image(t_buff *image, int	width, int height);
@@ -83,8 +84,11 @@ void			text_put(t_ctx *ctx, char *str, int x, int y, int color);
 /* Keyboard Ctrl */
 void			zoom(int x, int y, t_view *viewport, double zoom);
 int				key_press(int key, t_core *core);
+int				mouse_click(int button, int x, int y, t_core *core);
+int				mouse_up(int button, int x, int y, t_core *core);
+int				mouse_move(int x, int y, t_core *core);
 /* DrawFract */
-void			draw(t_core *core);
+void			draw_fractal(t_core *core);
 void			render(t_core *core);
 t_complex	screen_to_complex(int x, int y, t_view *viewport);
 t_pixel		mandelbrot_pixel(int x, int y, t_view *viewport);
