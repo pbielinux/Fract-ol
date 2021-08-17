@@ -26,5 +26,19 @@ void	draw_gui(t_core *core)
 {
 	char	*relative_path = "./sources/GUI.xpm";
 
-	core->ctx->gui->img = mlx_xpm_file_to_image(core->ctx->mlx_ptr, relative_path, &core->ctx->gui->width, &core->ctx->gui->height);
+	core->gui->img = mlx_xpm_file_to_image(core->ctx->mlx_ptr, relative_path,
+		&core->ctx->width, &core->gui->height);
+	mlx_put_image_to_window(core->ctx->mlx_ptr, core->ctx->win_ptr,
+		core->gui->img, 0, 0);
+}
+
+void	draw_configs(t_core *core)
+{
+	char	*relative_path = "./sources/Control-Panel.xpm";
+
+	core->configs->img = mlx_xpm_file_to_image(core->ctx->mlx_ptr, relative_path,
+		&core->configs->width, &core->configs->height);
+	mlx_put_image_to_window(core->ctx->mlx_ptr, core->ctx->win_ptr,
+		core->configs->img, 61, 80);
+	text_put(core->ctx, ft_itoa(core->ctx->viewport.max), 400, 285, 0x00000000);
 }

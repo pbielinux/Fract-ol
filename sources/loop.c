@@ -2,14 +2,15 @@
 
 int	loop_hook(t_core *core)
 {
-	draw(core);
-	fps_count(core);
+	mlx_clear_window(core->ctx->mlx_ptr, core->ctx->win_ptr);
 	draw_gui(core);
-	mlx_put_image_to_window(core->ctx->mlx_ptr, core->ctx->win_ptr,
-		core->ctx->gui->img, 0, 0);
-	mlx_put_image_to_window(core->ctx->mlx_ptr, core->ctx->win_ptr,
-		core->ctx->buff->img, 278, 174);
-	text_put(core->ctx, "MANDELBROT SET", 883, 15, 0xFFFFFFFF);
+	draw(core);
+	if (core->configs->show)
+		draw_configs(core);
+	if (ft_strncmp(core->ctx->fractal->name, "Mandelbrot Set", 5))
+		text_put(core->ctx, "Mandelbrot Set", 883, 155, 0x00000000);
+	else if (ft_strncmp(core->ctx->fractal->name, "Julia Set", 5))
+		text_put(core->ctx, "Julia Set", 910, 155, 0x00000000);
 	return (core->inited);
 }
 

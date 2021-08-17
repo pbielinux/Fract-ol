@@ -37,6 +37,7 @@ void	draw(t_core *core)
 	int				y;
 	int				color;
 
+	mlx_put_image_to_window(core->ctx->mlx_ptr, core->ctx->win_ptr, core->window->img, 304, 151);
 	y = 0;
 	while (y < core->ctx->height)
 	{
@@ -49,4 +50,6 @@ void	draw(t_core *core)
 		}
 		y++;
 	}
+	mlx_put_image_to_window(core->ctx->mlx_ptr, core->ctx->win_ptr,
+		core->ctx->buff->img, 306, 180);
 }

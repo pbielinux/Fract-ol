@@ -5,7 +5,7 @@ void	ft_free_core(t_core	*core)
 	if (core)
 	{
 		mlx_destroy_image(core->ctx->mlx_ptr, core->ctx->buff->img);
-		mlx_destroy_image(core->ctx->mlx_ptr, core->ctx->gui->img);
+		mlx_destroy_image(core->ctx->mlx_ptr, core->gui->img);
 		mlx_destroy_window(core->ctx->mlx_ptr, core->ctx->win_ptr);
 		free(core->ctx->data);
 	}

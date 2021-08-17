@@ -9,8 +9,7 @@ t_ctx	*new_context(int width, int height)
 	if (ctx->mlx_ptr == NULL)
 		ft_exit_error(NULL, MLX_INIT_FAIL);
 	ctx->data = ft_malloc_or_exit(sizeof(t_pixel) * WIDTH * HEIGHT);
-	ctx->buff = new_buffer(ctx, WIDTH, HEIGHT);
-	ctx->gui = new_buffer(ctx, WIN_WIDTH, WIN_HEIGHT);
+	ctx->buff = new_buffer(ctx, WIDTH, HEIGHT, true);
 	ctx->fractal = get_fractal(2);
 	ctx->win_ptr = 0;
 	ctx->width = width;

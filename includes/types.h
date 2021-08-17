@@ -56,6 +56,7 @@ typedef	struct	s_palette
 typedef	struct	s_buffer
 {
 	bool	initied;
+	bool	show;
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -93,7 +94,6 @@ typedef	struct	s_context
 	void			*mlx_ptr;
 	void 			*win_ptr;
 	t_buff		*buff;
-	t_buff		*gui;
 	t_pixel		*data;
 	t_fractal	*fractal;
 	t_palette	palette;
@@ -108,7 +108,9 @@ typedef struct	s_core
 {
 	int			inited;
 	t_ctx		*ctx;
-	int			gui;
+	t_buff	*gui;
+	t_buff	*configs;
+	t_buff	*window;
 }								t_core;
 
 #endif /* TYPES_H */

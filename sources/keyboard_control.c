@@ -73,6 +73,15 @@ int	key_press(int key, t_core *core)
 		core->ctx->palette = get_palette(1);
 	if (key == KB_2)
 		core->ctx->palette = get_palette(2);
+
+	if (key == KB_9)
+	{
+		if (core->configs->show)
+			core->configs->show = false;
+		else
+			core->configs->show = true;
+	}
+
 	if (key == KB_A)
 	{
 		core->ctx->fractal = get_fractal(1);
