@@ -13,6 +13,7 @@
 
 typedef enum e_exit_code
 {
+	NOT_ENOUGH_ARGS,
 	MEMORY_FAIL,
 	BUFF_NOT_SET,
 	BUFF_ADDR_NOT_SET,
@@ -107,6 +108,7 @@ typedef	struct	s_context
 	int				width;
 	int				height;
 	int				line_length;
+	bool			smooth;
 }								t_ctx;
 
 /* Core */

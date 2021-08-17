@@ -12,20 +12,21 @@
 # define KB_COMMAND_LEFT	55
 # define KB_COMMAND_RIGHT	55
 # define KB_SPACE					49
-# define KB_PLUS					24
-# define KB_MINUS					27
+# define KB_PLUS					69
+# define KB_MINUS					78
+# define KB_STAR					67
 
 // Numeric Keys
-# define KB_1	18
-# define KB_2	19
-# define KB_3	20
-# define KB_4	21
-# define KB_5	23
-# define KB_6	22
-# define KB_7	26
-# define KB_8	28
-# define KB_9	25
-# define KB_0	29
+# define KB_1	83
+# define KB_2	84
+# define KB_3	85
+# define KB_4	86
+# define KB_5	87
+# define KB_6	88
+# define KB_7	89
+# define KB_8	91
+# define KB_9	92
+# define KB_0	82
 
 /* Characters */
 # define KB_W			13

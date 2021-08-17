@@ -30,10 +30,26 @@ t_color	linear_color(double iter, int max_iter, t_palette *palette)
 	return (color);
 }
 
+t_color	smooth_color(t_pixel p, int max, t_palette *pal)
+{
+	double	i;
+	double	zn;
+	double	nu;
+
+	zn = log(p.c.r * p.c.r + p.c.i * p.c.i) / 2.0f;
+	nu = log(zn / log(2)) / log(2);
+	i = p.iter + 1 - nu;
+	if (i < 0)
+		i = 0;
+	return (linear_color(i, max, pal));
+}
+
 int	get_color(t_pixel pixel, t_ctx *ctx)
 {
 	if (pixel.iter >= ctx->viewport.max)
 		return (0x00000000);
+	if (ctx->smooth)
+		return (smooth_color(pixel, ctx->viewport.max, &ctx->palette).value);
 	return (linear_color((double)pixel.iter, ctx->viewport.max,
 			&ctx->palette).value);
 }

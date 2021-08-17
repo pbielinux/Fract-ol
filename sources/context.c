@@ -10,10 +10,10 @@ t_ctx	*new_context(int width, int height)
 		ft_exit_error(NULL, MLX_INIT_FAIL);
 	ctx->data = ft_malloc_or_exit(sizeof(t_pixel) * WIDTH * HEIGHT);
 	ctx->buff = new_buffer(ctx, WIDTH, HEIGHT, true);
-	ctx->fractal = get_fractal(1);
 	ctx->win_ptr = 0;
 	ctx->width = width;
 	ctx->height = height;
-	ctx->palette = get_palette(2);
+	ctx->smooth = true;
+	ctx->palette = get_palette(1);
 	return (ctx);
 }

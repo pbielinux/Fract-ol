@@ -59,7 +59,8 @@ t_buff		*new_window(t_ctx *ctx, int width, int height, bool show);
 t_buff		*new_gui(t_ctx *ctx, int width, int height);
 void			init_loop(t_core *core);
 int				loop_hook(t_core *core);
-t_fractal	*get_fractal();
+t_fractal	*get_fractal(int index);
+t_fractal	*fractal_search(char  *str);
 /* Color */
 t_palette	get_palette(int index);
 int				get_color(t_pixel pixel, t_ctx *ctx);
@@ -95,5 +96,7 @@ t_pixel		mandelbrot_pixel(int x, int y, t_view *viewport);
 void			mandelbrot_viewport(t_view *viewport);
 t_pixel		julia_pixel(int x, int y, t_view *viewport);
 void			julia_viewport(t_view *viewport);
+t_pixel		burningship_pixel(int x, int y, t_view *viewport);
+void			burningship_viewport(t_view *viewport);
 
 #endif // !_FRACTOL_H_

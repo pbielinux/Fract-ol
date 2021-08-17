@@ -43,7 +43,8 @@ SOURCES_LIST = \
 	utilities.c \
 	viewport.c \
 	gui.c \
-	mouse_control.c
+	mouse_control.c \
+	burning_ship.c
 
 SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))
 

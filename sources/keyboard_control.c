@@ -26,35 +26,19 @@ void	move(int key, t_core *core)
 	height = (core->ctx->viewport.y_max - core->ctx->viewport.y_min)
 		* core->ctx->viewport.zoom;
 	if (key == KB_UP)
-	{
-		ft_putstr("Key UP\n");
 		core->ctx->viewport.off_y -= height * 0.05f;
-	}
 	if (key == KB_DOWN)
-	{
-		ft_putstr("Key DOWN\n");
 		core->ctx->viewport.off_y += height * 0.05f;
-	}
 	if (key == KB_LEFT)
-	{
-		ft_putstr("Key LEFT\n");
 		core->ctx->viewport.off_x -= width * 0.05f;
-	}
 	if (key == KB_RIGHT)
-	{
-		ft_putstr("Key RIGHT\n");
 		core->ctx->viewport.off_x += width * 0.05f;
-	}
 }
 
 int	key_press(int key, t_core *core)
 {
 	if (key == KB_ESC)
-	{
-		ft_putstr("Key ESC\n");
-		ft_free_core(core);
 		exit(0);
-	}
 	move(key, core);
 	if (key == KB_PLUS)
 		zoom(WIDTH / 2, HEIGHT / 2, &core->ctx->viewport, 1 / 1.1f);
@@ -73,25 +57,15 @@ int	key_press(int key, t_core *core)
 		core->ctx->palette = get_palette(1);
 	if (key == KB_2)
 		core->ctx->palette = get_palette(2);
-
-	if (key == KB_9)
-	{
-		if (core->configs->show)
-			core->configs->show = false;
-		else
-			core->configs->show = true;
-	}
-
-	if (key == KB_A)
-	{
-		core->ctx->fractal = get_fractal(1);
-		reset_viewport(core);
-	}
-	if (key == KB_D)
-	{
-		core->ctx->fractal = get_fractal(2);
-		reset_viewport(core);
-	}
+	if (key == KB_3)
+		core->ctx->palette = get_palette(3);
+	if (key == KB_4)
+		core->ctx->palette = get_palette(4);
+	if (key == KB_ENTER)
+		core->configs->show = true - core->configs->show;
+	if (key == KB_STAR)
+		core->ctx->smooth = true - core->ctx->smooth;
 	render(core);
+	printf("%d\n", key);
 	return (0);
 }
