@@ -8,7 +8,18 @@ void	ft_free_core(t_core	*core)
 		mlx_destroy_image(core->ctx->mlx_ptr, core->gui->img);
 		mlx_destroy_window(core->ctx->mlx_ptr, core->ctx->win_ptr);
 		free(core->ctx->data);
+		free(core->ctx->buff);
+		free(core->ctx);
+		free(core->gui);
+		free(core->window);
+		free(core);
 	}
+}
+
+void	ft_exit(t_core *core)
+{
+	ft_free_core(core);
+	exit(0);
 }
 
 void	*ft_malloc_or_exit(int	size)

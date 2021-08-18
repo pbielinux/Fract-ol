@@ -4,8 +4,6 @@ int	loop_hook(t_core *core)
 {
 	draw_gui(core);
 	draw_fractal(core);
-	if (core->configs->show)
-		draw_configs(core, 138, 152);
 	return (core->inited);
 }
 

@@ -2,11 +2,28 @@
 
 int	mouse_move(int x, int y, t_core *core)
 {
-	if (core->mouse.is_down && (x >= 380 && x <= 1660)
-		&& (y >= 180 && y <= 900))
+	double	width;
+	double	height;
+
+	core->mouse.prev_x = core->mouse.x;
+	core->mouse.prev_y = core->mouse.y;
+	core->mouse.x = x - 382;
+	core->mouse.y = y - 180;
+	if ((x >= 380 && x <= 1660) && (y >= 180 && y <= 900))
 	{
-		core->ctx->viewport.mouse = screen_to_complex(x, y,
-				&core->ctx->viewport);
+		if (core->mouse.left_down)
+		{
+			width = (core->ctx->view.x_max - core->ctx->view.x_min)
+				* core->ctx->view.zoom;
+			height = (core->ctx->view.y_max - core->ctx->view.y_min)
+				* core->ctx->view.zoom;
+			core->ctx->view.off_x += (core->mouse.prev_x - core->mouse.x)
+				/ WIDTH * width;
+			core->ctx->view.off_y += (core->mouse.prev_y - core->mouse.y)
+				/ HEIGHT * height;
+		}
+		if (core->mouse.mid_down)
+			core->ctx->view.mouse = screen_to_complex(x, y, &core->ctx->view);
 		render(core);
 	}
 	return (0);
@@ -16,8 +33,10 @@ int	mouse_up(int button, int x, int y, t_core *core)
 {
 	(void)x;
 	(void)y;
-	(void)button;
-	core->mouse.is_down = 0;
+	if (button == 1)
+		core->mouse.left_down = false;
+	if (button == 3)
+		core->mouse.mid_down = false;
 	return (0);
 }
 
@@ -53,8 +72,7 @@ void	mouse_left_click(int x, int y, t_core *core)
 		core->configs->show = true - core->configs->show;
 	if (core->configs->show)
 		click_palettes(core, x, y);
-	core->mouse.is_down = 1;
-	printf("X: %d  Y: %d\n", x, y);
+	core->mouse.left_down = true;
 }
 
 int	mouse_click(int button, int x, int y, t_core *core)
@@ -62,9 +80,11 @@ int	mouse_click(int button, int x, int y, t_core *core)
 	if (button == 1)
 		mouse_left_click(x, y, core);
 	if (button == 4 && (x >= 380 && x <= 1660) && (y >= 180 && y <= 900))
-		zoom(x - 382, y - 180, &core->ctx->viewport, 1.1f);
+		zoom(x - 382, y - 180, &core->ctx->view, 1.1f);
 	if (button == 5 && (x >= 380 && x <= 1660) && (y >= 180 && y <= 900))
-		zoom(x - 382, y - 180, &core->ctx->viewport, 1 / 1.1f);
+		zoom(x - 382, y - 180, &core->ctx->view, 1 / 1.1f);
+	if (button == 3)
+		core->mouse.mid_down = true;
 	render(core);
 	return (0);
 }

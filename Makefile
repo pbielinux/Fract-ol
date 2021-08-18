@@ -1,7 +1,7 @@
 NAME = Fract-ol
 
 CC = gcc
-FLAGS = -Wall -Wextra
+FLAGS = -O3 -Wall -Wextra -Werror
 LIBRARIES = -lmlx -lm -lft\
 	-L$(LIBFT_DIR) -L$(MLX_DIR)\
 	-framework OpenGL -framework AppKit
@@ -69,7 +69,7 @@ $(NAME): $(LIBFT) $(MLX) $(OBJECTS_DIR) $(OBJECTS)
 	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS) -o $(NAME)
 	@echo "\n\n[$(GREENGREEN)$(NAME)$(RESET)]: Object files were created\n"
 	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: $(NAME) was created\n$(GREENGREEN)"
-	@cat $(HEADERS_DIR)logo
+	@cat $(HEADERS_DIR)/graphic_assets/logo
 
 $(OBJECTS_DIR):
 	@mkdir -p $(OBJECTS_DIR)

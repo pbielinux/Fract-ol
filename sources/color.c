@@ -18,7 +18,7 @@ t_color	linear_color(double iter, int max_iter, t_palette *palette)
 	t_color	color;
 	double	index;
 	double	adjust;
-	int			count;
+	int		count;
 
 	index = iter / max_iter;
 	count = palette->count - 1;
@@ -46,10 +46,10 @@ t_color	smooth_color(t_pixel p, int max, t_palette *pal)
 
 int	get_color(t_pixel pixel, t_ctx *ctx)
 {
-	if (pixel.iter >= ctx->viewport.max)
+	if (pixel.iter >= ctx->view.max)
 		return (0x00000000);
 	if (ctx->smooth)
-		return (smooth_color(pixel, ctx->viewport.max, &ctx->palette).value);
-	return (linear_color((double)pixel.iter, ctx->viewport.max,
+		return (smooth_color(pixel, ctx->view.max, &ctx->palette).value);
+	return (linear_color((double)pixel.iter, ctx->view.max,
 			&ctx->palette).value);
 }

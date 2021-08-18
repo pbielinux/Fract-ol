@@ -1,71 +1,58 @@
 #include "fractol.h"
 
-void	zoom(int x, int y, t_view *viewport, double zoom)
-{
-	double	width;
-	double	height;
-	double	new_width;
-	double	new_height;
-
-	width = (viewport->x_max - viewport->x_min) * (viewport->zoom);
-	height = (viewport->y_max - viewport->y_min) * (viewport->zoom);
-	new_width = (viewport->x_max - viewport->x_min) * (viewport->zoom * zoom);
-	new_height = (viewport->y_max - viewport->y_min) * (viewport->zoom * zoom);
-	viewport->zoom *= zoom;
-	viewport->off_x -= ((double)x / WIDTH) * (new_width - width);
-	viewport->off_y -= ((double)y / HEIGHT) * (new_height - height);
-}
-
 void	move(int key, t_core *core)
 {
 	double	width;
 	double	height;
 
-	width = (core->ctx->viewport.x_max - core->ctx->viewport.x_min)
-		* core->ctx->viewport.zoom;
-	height = (core->ctx->viewport.y_max - core->ctx->viewport.y_min)
-		* core->ctx->viewport.zoom;
+	width = (core->ctx->view.x_max - core->ctx->view.x_min)
+		* core->ctx->view.zoom;
+	height = (core->ctx->view.y_max - core->ctx->view.y_min)
+		* core->ctx->view.zoom;
 	if (key == KB_UP)
-		core->ctx->viewport.off_y -= height * 0.05f;
+		core->ctx->view.off_y -= height * 0.05f;
 	if (key == KB_DOWN)
-		core->ctx->viewport.off_y += height * 0.05f;
+		core->ctx->view.off_y += height * 0.05f;
 	if (key == KB_LEFT)
-		core->ctx->viewport.off_x -= width * 0.05f;
+		core->ctx->view.off_x -= width * 0.05f;
 	if (key == KB_RIGHT)
-		core->ctx->viewport.off_x += width * 0.05f;
+		core->ctx->view.off_x += width * 0.05f;
+}
+
+void	color_controls(int key, t_core *core)
+{
+	if (key == KB_1)
+		core->ctx->palette = get_palette(1);
+	else if (key == KB_2)
+		core->ctx->palette = get_palette(2);
+	else if (key == KB_3)
+		core->ctx->palette = get_palette(3);
+	else if (key == KB_4)
+		core->ctx->palette = get_palette(4);
+	else if (key == KB_STAR)
+		core->ctx->smooth = true - core->ctx->smooth;
 }
 
 int	key_press(int key, t_core *core)
 {
 	if (key == KB_ESC)
-		exit(0);
+		ft_exit(core);
 	move(key, core);
 	if (key == KB_PLUS)
-		zoom(WIDTH / 2, HEIGHT / 2, &core->ctx->viewport, 1 / 1.1f);
+		zoom(WIDTH / 2, HEIGHT / 2, &core->ctx->view, 1 / 1.1f);
 	if (key == KB_MINUS)
-		zoom(WIDTH / 2, HEIGHT / 2, &core->ctx->viewport, 1.1f);
+		zoom(WIDTH / 2, HEIGHT / 2, &core->ctx->view, 1.1f);
 	if (key == KB_0)
 	{
-		core->ctx->fractal->viewport(&core->ctx->viewport);
+		core->ctx->fractal->viewport(&core->ctx->view);
 		reset_viewport(core);
 	}
 	if (key == KB_W)
-		core->ctx->viewport.max++;
+		core->ctx->view.max++;
 	if (key == KB_S)
-		core->ctx->viewport.max--;
-	if (key == KB_1)
-		core->ctx->palette = get_palette(1);
-	if (key == KB_2)
-		core->ctx->palette = get_palette(2);
-	if (key == KB_3)
-		core->ctx->palette = get_palette(3);
-	if (key == KB_4)
-		core->ctx->palette = get_palette(4);
+		core->ctx->view.max--;
 	if (key == KB_ENTER)
 		core->configs->show = true - core->configs->show;
-	if (key == KB_STAR)
-		core->ctx->smooth = true - core->ctx->smooth;
 	render(core);
-	printf("%d\n", key);
 	return (0);
 }

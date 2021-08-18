@@ -19,8 +19,8 @@ t_fractal	*get_fractal(int index)
 
 t_fractal	*fractal_search(char *str)
 {
-	int							i;
-	t_fractal				*fractal;
+	int			i;
+	t_fractal	*fractal;
 
 	fractal = get_fractal(0);
 	i = 0;

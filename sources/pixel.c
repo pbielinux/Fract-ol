@@ -1,8 +1,8 @@
 #include "fractol.h"
 
-void	text_put(t_ctx *ctx, char *str, int x, int y, int color)
+void	text_put(t_ctx *ctx, char *str, int x, int y)
 {
-	mlx_string_put(ctx->mlx_ptr, ctx->win_ptr, x, y, color, str);
+	mlx_string_put(ctx->mlx_ptr, ctx->win_ptr, x, y, 0x000000, str);
 }
 
 void	pixel_put(t_buff *buff, int x, int y, int color)
