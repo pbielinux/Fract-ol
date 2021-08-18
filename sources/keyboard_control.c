@@ -38,6 +38,7 @@ int	key_press(int key, t_core *core)
 	if (key == KB_ESC)
 		ft_exit(core);
 	move(key, core);
+	color_controls(key, core);
 	if (key == KB_PLUS)
 		zoom(WIDTH / 2, HEIGHT / 2, &core->ctx->view, 1 / 1.1f);
 	if (key == KB_MINUS)
