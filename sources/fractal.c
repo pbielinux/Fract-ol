@@ -26,7 +26,7 @@ t_fractal	*fractal_search(char *str)
 	i = 0;
 	while (fractal[i].name != NULL)
 	{
-		if (!ft_strncmp(fractal[i].name, str, 3))
+		if (!ft_strncmp(fractal[i].name, str, 5))
 			return (&fractal[i]);
 		i++;
 	}

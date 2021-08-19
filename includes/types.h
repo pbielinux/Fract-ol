@@ -14,6 +14,7 @@
 typedef enum e_exit_code
 {
 	NOT_ENOUGH_ARGS,
+	WRONG_FRACTAL_NAME,
 	MEMORY_FAIL,
 	BUFF_NOT_SET,
 	BUFF_ADDR_NOT_SET,
