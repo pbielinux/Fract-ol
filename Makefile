@@ -1,59 +1,4 @@
-NAME = fractol
-
-CC = gcc
-FLAGS = -O3 -Wall -Wextra -Werror
-LIBRARIES = -lmlx -lm -lft\
-	-L$(LIBFT_DIR) -L$(MLX_DIR)\
-	-framework OpenGL -framework AppKit
-INCLUDES = -I$(HEADERS_DIR) -I$(LIBFT_HEADERS) -I$(MLX_HEADERS)
-
-LIBFT = $(LIBFT_DIR)libft.a
-LIBFT_DIR = ./libft/
-LIBFT_HEADERS = $(LIBFT_DIR)include/
-
-MLX = $(MLX_DIR)libmlx.a
-MLX_DIR = ./mlx_macos/
-MLX_HEADERS = $(MLX_DIR)
-
-HEADERS_LIST = \
-	fractol.h \
-	macos_keys.h \
-	types.h \
-	core_utils.h
-HEADERS_DIR = ./includes/
-HEADERS = $(addprefix $(HEADERS_DIR), $(HEADERS_LIST))
-
-SOURCES_DIR = ./sources/
-SOURCES_LIST = \
-	buffer.c \
-	color.c \
-	context.c \
-	core.c \
-	exit_error.c \
-	fractal.c \
-	julia.c \
-	keyboard_control.c \
-	loop.c \
-	main.c \
-	mandelbrot.c \
-	memory_utils.c \
-	palette.c \
-	pixel.c \
-	render.c \
-	utilities.c \
-	viewport.c \
-	gui.c \
-	mouse_control.c \
-	burning_ship.c
-
-SOURCES = $(addprefix $(SOURCES_DIR), $(SOURCES_LIST))
-
-OBJECTS_DIR = objects/
-OBJECTS_LIST = $(patsubst %.c, %.o, $(SOURCES_LIST))
-OBJECTS	= $(addprefix $(OBJECTS_DIR), $(OBJECTS_LIST))
-
 # COLORS
-
 GREEN = \033[0;32m
 GREENGREEN = \033[38;5;46m
 RED = \033[0;31m
@@ -61,48 +6,110 @@ BLUE = \033[0;34m
 GREY = \033[38;5;240m
 RESET = \033[0m
 
-.PHONY: all clean fclean re
+NAME	=	fractol
 
-all: $(NAME)
+LIBFT	=	includes/libft
 
-$(NAME): $(LIBFT) $(MLX) $(OBJECTS_DIR) $(OBJECTS)
-	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS) -o $(NAME)
-	@echo "\n\n[$(GREENGREEN)$(NAME)$(RESET)]: Object files were created\n"
-	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: $(NAME) was created\n$(GREENGREEN)"
-	@cat $(HEADERS_DIR)/graphic_assets/logo
+HEADERS	=	headers
 
-$(OBJECTS_DIR):
-	@mkdir -p $(OBJECTS_DIR)
-	@echo "\n[$(GREENGREEN)$(NAME)$(RESET)]: Objects Directory was created\n"
+DIR_S	=	srcs
 
-$(OBJECTS_DIR)%.o : $(SOURCES_DIR)%.c $(HEADERS)
-	@$(CC) $(FLAGS) -c $(INCLUDES) $< -o $@
+DIR_O	=	obj
+
+O_SRCS	:=	srcs/main.c \
+			srcs/fractals/mandelbrot.c \
+			srcs/fractals/burning_ship.c \
+			srcs/fractals/julia.c \
+			srcs/fractals/fractal.c \
+			srcs/core/core.c \
+			srcs/core/loop.c \
+			srcs/core/buffer.c \
+			srcs/core/render.c \
+			srcs/core/utils.c \
+			srcs/core/memory_utils.c \
+			srcs/core/exit_error.c \
+			srcs/context/context.c \
+			srcs/context/viewport.c \
+			srcs/context/pixel.c \
+			srcs/context/palette.c \
+			srcs/context/color.c \
+			srcs/context/gui.c \
+			srcs/control/mouse_control.c \
+			srcs/control/keyboard_control.c
+
+
+SRCS	:=	$(O_SRCS)
+
+B_SRCS	:=	$(O_SRCS)
+
+OBJS	:= $(SRCS:%.c=$(DIR_O)/%.o)
+
+BOBJS	:= $(B_SRCS:%.c=$(DIR_O)/%.o)
+
+SUB_DIR_O := $(shell find $(DIR_S) -type d)
+SUB_DIR_O := $(SUB_DIR_O:%=$(DIR_O)/%)
+
+DEPS	=	$(HEADERS)/core_utils.h \
+			$(HEADERS)/fractol.h \
+			$(HEADERS)/types.h \
+			$(HEADERS)/macos_keys.h \
+			$(HEADERS)/terminal_colors.h
+
+CC		=	gcc
+
+# Change optimization flag to -O3 for faster execution
+CFLAGS	=	-O3 -Wall -Wextra -Werror
+
+# Linux Libs
+# LIBS	=	-lm -L./libft -lft -lmlx -lX11 -lbsd -lXext
+# MLX		=	includes/mlx_linux
+
+# Mac Libs
+LIBS	=	-lm -L./$(LIBFT) -lft -lmlx -framework OpenGL -framework AppKit
+MLX		=	includes/mlx_macos
+
+RM		=	rm -f
+
+INCLUDES	= -I/$(LIBFT)/ -I/headers/
+
+$(DIR_O)/%.o: %.c
+	@mkdir -p $(DIR_O)
+	@mkdir -p $(SUB_DIR_O)
+	@$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
 	@echo "$(GREEN)//$(RESET)\c"
 
-$(LIBFT):
-	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: Creating $(LIBFT)...$(RESET)"
-	@make -C $(LIBFT_DIR)
+$(NAME):	libft mlx $(DEPS) $(OBJS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS)
+	@echo "\n\n[$(GREENGREEN)$(NAME)$(RESET)]: $(NAME) was created\n$(GREENGREEN)"
+	@cat includes/graphic_assets/logo
 
-$(MLX):
-	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: Creating $(MLX)...$(GREY)"
-	@make -C $(MLX_DIR)
-	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: MLX Objects were created"
+all:		$(NAME)
+
+libft:
+	@echo "[$(GREENGREEN)Fract-ol$(RESET)]: Creating $(LIBFT)...$(RESET)"
+	@make -C $(LIBFT)
+
+mlx:
+	@echo "$(RESET)[$(GREENGREEN)Fract-ol$(RESET)]: Creating MLX...$(GREY)"
+	@make -C $(MLX)
+	@echo "$(RESET)[$(GREENGREEN)Fract-ol$(RESET)]: MLX Objects were created\n"
 
 clean:
-	@make -C $(LIBFT_DIR) clean
-	@make -C $(MLX_DIR) clean
-	@rm -rf $(OBJECTS_DIR)
-	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: $(RED)Objects Directory was deleted$(RESET)"
-	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: $(RED)Object Files were deleted$(RESET)"
+	@make -C $(LIBFT) clean
+	@make -C $(MLX) clean
+	@rm -rf $(DIR_O)
+	@echo "[$(GREENGREEN)Fract-ol$(RESET)]: $(RED)Objects Directory was deleted$(RESET)"
+	@echo "[$(GREENGREEN)Fract-ol$(RESET)]: $(RED)Object Files were deleted$(RESET)"
 
-fclean: clean
-	@rm -f $(MLX)
-	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: $(RED)$(MLX) was deleted$(RESET)"
-	@rm -f $(LIBFT)
-	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: $(RED)$(LIBFT) was deleted$(RESET)"
+fclean:	clean
+	@rm -f $(MLX)/mlx.a
+	@echo "[$(GREENGREEN)Fract-ol$(RESET)]: $(RED)$(MLX) was deleted$(RESET)"
+	@rm -f $(LIBFT)/libft.a
+	@echo "[$(GREENGREEN)Fract-ol$(RESET)]: $(RED)$(LIBFT) was deleted$(RESET)"
 	@rm -f $(NAME)
-	@echo "[$(GREENGREEN)$(NAME)$(RESET)]: $(RED)$(NAME) was deleted$(RESET)\n"
+	@echo "[$(GREENGREEN)Fract-ol$(RESET)]: $(RED)$(NAME) was deleted$(RESET)\n"
 
-re:
-	@make fclean
-	@make all
+re:			fclean all
+
+
+.PHONY:		all clean fclean cubclean re bonus
