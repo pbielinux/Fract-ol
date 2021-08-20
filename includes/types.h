@@ -13,6 +13,7 @@
 
 typedef enum e_exit_code
 {
+	HELP,
 	NOT_ENOUGH_ARGS,
 	WRONG_FRACTAL_NAME,
 	MEMORY_FAIL,

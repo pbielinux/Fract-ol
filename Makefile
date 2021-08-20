@@ -1,4 +1,4 @@
-NAME = Fract-ol
+NAME = fractol
 
 CC = gcc
 FLAGS = -O3 -Wall -Wextra -Werror

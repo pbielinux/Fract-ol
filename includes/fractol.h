@@ -51,6 +51,7 @@ void		mandelbrot_viewport(t_view *viewport);
 void		reset_viewport(t_core *core);
 void		viewport_fit(t_view *viewport);
 /* Utilities */
+void		ft_print_usage(void);
 void		draw_gui(t_core *core);
 void		draw_configs(t_core *core, int x, int y);
 void		draw_window(t_core *core, int x, int y);
